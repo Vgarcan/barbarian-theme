@@ -1,0 +1,20 @@
+/* Cards temáticas. */
+/* ================= CARDS (piel con costura) ================= */
+.card {
+  --bs-card-bg: var(--sup-card);
+  --bs-card-color: var(--tinta);
+  --bs-card-border-color: var(--costura-color);
+  --bs-card-cap-bg: var(--cabecera-bg);
+  --bs-card-cap-color: var(--hueso);
+  --bs-card-border-radius: .55rem;
+  --bs-card-inner-border-radius: .5rem;
+  background-image: var(--tex-panel);
+  box-shadow: inset 0 0 28px var(--vineta), 0 6px 14px rgba(20,10,4,.25);
+  outline: 2px dashed var(--costura-color); outline-offset: -7px;
+}
+.card-header, .card-footer { background-image: var(--tex-cuero); }
+.card-header { font-family: var(--fuente-titulo); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.card-header[data-runa]::after { content: attr(data-runa); content: attr(data-runa) / ""; font-family: var(--fuente-runas); color: var(--brasa); font-size: 1.25rem; transition: text-shadow .3s; }
+.card:hover .card-header[data-runa]::after { text-shadow: 0 0 10px var(--brasa); }
+.card-footer { background-color: rgba(139,90,51,.18); color: inherit; }
+.card-title { color: var(--titulo); }

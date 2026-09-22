@@ -241,3 +241,4 @@ When extending the theme:
 6. Guard optional DOM elements before attaching listeners.
 7. Avoid making one optional dependency capable of stopping unrelated functionality.
 8. Prefer events or small public functions for communication between modules instead of cross-module DOM coupling.
+

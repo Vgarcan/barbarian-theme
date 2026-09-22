@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+  /* Aplica el tema guardado (o el del sistema) antes de pintar, para evitar parpadeos */
+  (function () {
+    var t; try { t = localStorage.getItem('tema-barbaro'); } catch (e) {}
+    if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-bs-theme', t);
+  })();
+</script>
+<title>Boilerplate Bárbaro · Bootstrap 5.3</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+<!-- 1. Bootstrap e iconos desde CDN (siempre primero) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<!-- 2. Tipografías: títulos, texto y runas -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Alegreya:ital,wght@0,400;0,600;0,800;1,400&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
+
+<!-- 3. Tema bárbaro (siempre después de Bootstrap) -->
+<link href="assets/css/base.css" rel="stylesheet">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#indice" data-bs-root-margin="0px 0px -55%">
+
+<!-- Fondo vivo del desierto (decorativo) -->
+<canvas id="escena" aria-hidden="true"></canvas>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
+  <div class="container">
+    <a class="navbar-brand" href="#"><span class="runa me-1" aria-hidden="true">ᛏ</span> Tribu del Albero</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Campamento</a></li>
+        <li class="nav-item"><a class="nav-link" href="#panteon">Panteón</a></li>
+        <li class="nav-item"><a class="nav-link" href="#escaramuzas">Escaramuzas</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tierras</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Conquistadas</h6></li>
+            <li><a class="dropdown-item" href="#">Llanura de las calaveras</a></li>
+            <li><a class="dropdown-item" href="#">Paso de la víbora</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item disabled" aria-disabled="true">Reino de hielo</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <button class="btn btn-sm btn-outline-light" id="toggleTema" type="button" aria-pressed="false"><i class="bi bi-moon-stars-fill me-1" aria-hidden="true"></i><span>Modo noche</span></button>
+        <button class="btn btn-sm btn-outline-light" id="toggleViento" type="button" aria-pressed="true"><i class="bi bi-wind me-1" aria-hidden="true"></i><span>Pausar viento</span></button>
+        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDemo" aria-controls="offcanvasDemo"><i class="bi bi-person-fill me-1" aria-hidden="true"></i>Mi tienda</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <p class="runas-hero mb-3" aria-hidden="true">ᚦᚨᚱᛏ ᛟᚾ ᛞᚢᚾᛖᛊ</p>
+    <h1 class="mb-4">Los dioses antiguos aún miran desde las dunas</h1>
+    <p class="lead mb-4">Boilerplate de Bootstrap 5.3 hecho de piel curtida, piedra de albero y runas. De día, atardecer claro. De noche, luna y constelaciones.</p>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#modalDemo">Invocar a los dioses</button>
+      <a class="btn btn-cuero btn-lg" href="#panteon">Ver el arsenal</a>
+    </div>
+  </div>
+</header>
+
+<div class="container contenido">
+  <div class="row g-4">
+    <!-- Índice con scrollspy: la runa de la sección activa se enciende -->
+    <aside class="col-lg-3 d-none d-lg-block">
+      <nav id="indice" class="indice panel-piel sticky-top nav flex-column" aria-label="Secciones">
+        <a class="nav-link" href="#panteon" data-runa="ᛟ">Panteón</a>
+        <a class="nav-link" href="#runas" data-runa="ᚨ">Tipografía y runas</a>
+        <a class="nav-link" href="#botones" data-runa="ᛏ">Botones</a>
+        <a class="nav-link" href="#juramento" data-runa="ᚷ">Formularios</a>
+        <a class="nav-link" href="#escaramuzas" data-runa="ᚦ">Tablas</a>
+        <a class="nav-link" href="#presagios" data-runa="ᛊ">Alertas y badges</a>
+        <a class="nav-link" href="#caminos" data-runa="ᚱ">Navegación</a>
+        <a class="nav-link" href="#cronicas" data-runa="ᛚ">Acordeón y listas</a>
+        <a class="nav-link" href="#visiones" data-runa="ᛞ">Carrusel</a>
+        <a class="nav-link" href="#rituales" data-runa="ᛇ">Progreso y carga</a>
+        <a class="nav-link" href="#emergentes" data-runa="ᛉ">Emergentes</a>
+      </nav>
+    </aside>
+
+    <main class="col-lg-9">
+
+<!-- ============ PANTEÓN (cards + progress + badges) ============ -->
+<section id="panteon" class="panel-piel">
+  <h2 data-runa-titulo="ᛟ">Panteón</h2>
+  <p class="mb-4">Los dioses de la tribu. Cada ofrenda aumenta su favor.</p>
+  <div class="row g-4 row-cols-1 row-cols-md-2">
+    <div class="col"><div class="card dios h-100">
+      <div class="card-header" data-runa="ᚦ">Varrok</div>
+      <div class="card-body">
+        <h3 class="card-title h5">Señor de la tormenta</h3>
+        <p class="card-text">Parte montañas con el puño y habla con truenos. Acepta hierro y sangre de enemigo.</p>
+        <div class="mt-auto">
+          <div class="d-flex justify-content-between small mb-1"><span>Favor</span><span>72%</span></div>
+          <div class="progress mb-3" role="progressbar" aria-label="Favor de Varrok" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar" style="width:72%"></div></div>
+          <button class="btn btn-sm btn-primary">Hacer ofrenda</button> <span class="badge text-bg-danger ms-1">Guerra</span>
+        </div>
+      </div>
+    </div></div>
+    <div class="col"><div class="card dios h-100">
+      <div class="card-header" data-runa="ᛊ">Ishara</div>
+      <div class="card-body">
+        <h3 class="card-title h5">Dama de las arenas</h3>
+        <p class="card-text">Guarda el sol, la sed y los caminos que desaparecen. Acepta silencio y paciencia.</p>
+        <div class="mt-auto">
+          <div class="d-flex justify-content-between small mb-1"><span>Favor</span><span>45%</span></div>
+          <div class="progress mb-3" role="progressbar" aria-label="Favor de Ishara" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-brasa" style="width:45%"></div></div>
+          <button class="btn btn-sm btn-primary">Hacer ofrenda</button> <span class="badge text-bg-warning ms-1">Desierto</span>
+        </div>
+      </div>
+    </div></div>
+    <div class="col"><div class="card dios h-100">
+      <div class="card-header" data-runa="ᛚ">Ondra</div>
+      <div class="card-body">
+        <h3 class="card-title h5">Madre de los pozos</h3>
+        <p class="card-text">Da agua a quien la respeta y la niega a quien la desperdicia. Acepta sal.</p>
+        <div class="mt-auto">
+          <div class="d-flex justify-content-between small mb-1"><span>Favor</span><span>88%</span></div>
+          <div class="progress mb-3" role="progressbar" aria-label="Favor de Ondra" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-success" style="width:88%"></div></div>
+          <button class="btn btn-sm btn-primary">Hacer ofrenda</button> <span class="badge text-bg-info ms-1">Agua</span>
+        </div>
+      </div>
+    </div></div>
+    <div class="col"><div class="card dios h-100">
+      <div class="card-header" data-runa="ᛇ">Ghal-Tamur</div>
+      <div class="card-body">
+        <h3 class="card-title h5">El que cuenta los huesos</h3>
+        <p class="card-text">Espera al final de cada escaramuza. Nadie le ofrece nada, pero siempre cobra.</p>
+        <div class="mt-auto">
+          <div class="d-flex justify-content-between small mb-1"><span>Favor</span><span>20%</span></div>
+          <div class="progress mb-3" role="progressbar" aria-label="Favor de Ghal-Tamur" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-danger" style="width:20%"></div></div>
+          <button class="btn btn-sm btn-cuero">Evitar su mirada</button> <span class="badge text-bg-dark ms-1">Muerte</span>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ TIPOGRAFÍA Y RUNAS ============ -->
+<section id="runas" class="panel-piel">
+  <h2 data-runa-titulo="ᚨ">Tipografía y runas</h2>
+  <h1>Encabezado h1</h1><h2>Encabezado h2</h2><h3>Encabezado h3</h3><h4>Encabezado h4</h4><h5>Encabezado h5</h5><h6>Encabezado h6</h6>
+  <p class="lead">Texto destacado para entradillas.</p>
+  <p>Texto normal con un <a href="#">enlace</a>, <strong>negrita</strong>, <em>cursiva</em>, <mark>resaltado</mark>, <small>pequeño</small>, <code>código</code> y <kbd>Ctrl</kbd> + <kbd>S</kbd>.</p>
+  <div class="separador-runico" aria-hidden="true">ᚠᚢᚦᚨᚱᚲ</div>
+  <figure>
+    <blockquote class="blockquote"><p>Quien tiene acero y agua no teme al desierto.</p></blockquote>
+    <figcaption class="blockquote-footer">Proverbio de las tribus del sur</figcaption>
+  </figure>
+  <div class="row g-4 mt-1">
+    <div class="col-md-6">
+      <h3 class="h5">Lista con runas</h3>
+      <ul class="lista-runas">
+        <li data-runa="ᚠ">Oro y ganado</li>
+        <li data-runa="ᛉ">Escudo y protección</li>
+        <li data-runa="ᛏ">Lanza y victoria</li>
+      </ul>
+      <h3 class="h5 mt-3">Listas normales</h3>
+      <ol><li>Afilar el acero</li><li>Llenar los odres</li></ol>
+    </div>
+    <div class="col-md-6">
+      <h3 class="h5">Runas usadas como iconos</h3>
+      <table class="table table-sm align-middle mb-0">
+        <thead><tr><th scope="col">Runa</th><th scope="col">Significado</th><th scope="col">Dónde</th></tr></thead>
+        <tbody>
+          <tr><td class="runa fs-4">ᛊ</td><td>Sol</td><td><code>.alert-primary</code></td></tr>
+          <tr><td class="runa fs-4">ᛉ</td><td>Protección</td><td><code>.alert-success</code></td></tr>
+          <tr><td class="runa fs-4">ᚨ</td><td>Mensaje</td><td><code>.alert-info</code></td></tr>
+          <tr><td class="runa fs-4">ᚦ</td><td>Peligro</td><td><code>.alert-warning</code></td></tr>
+          <tr><td class="runa fs-4">ᛏ</td><td>Guerra</td><td><code>.alert-danger</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="separador-runico" aria-hidden="true">ᛟ</div>
+  <h3 class="h5">Paleta</h3>
+  <div class="row g-2 row-cols-3 row-cols-md-6">
+    <div class="col"><div class="muestra" style="background:var(--albero)"></div><small>Albero</small></div>
+    <div class="col"><div class="muestra" style="background:var(--verde-arido)"></div><small>Verde árido</small></div>
+    <div class="col"><div class="muestra" style="background:var(--piel)"></div><small>Piel</small></div>
+    <div class="col"><div class="muestra" style="background:var(--cuero)"></div><small>Cuero</small></div>
+    <div class="col"><div class="muestra" style="background:var(--sangre)"></div><small>Sangre</small></div>
+    <div class="col"><div class="muestra" style="background:#213257"></div><small>Noche</small></div>
+  </div>
+</section>
+
+<!-- ============ BOTONES ============ -->
+<section id="botones" class="panel-piel">
+  <h2 data-runa-titulo="ᛏ">Botones</h2>
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button class="btn btn-primary">Primary</button><button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-success">Success</button><button class="btn btn-danger">Danger</button>
+    <button class="btn btn-warning">Warning</button><button class="btn btn-info">Info</button>
+    <button class="btn btn-light">Light</button><button class="btn btn-dark">Dark</button>
+    <button class="btn btn-cuero">Cuero</button><button class="btn btn-link">Link</button>
+  </div>
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button class="btn btn-outline-primary">Outline primary</button><button class="btn btn-outline-secondary">Outline secondary</button>
+    <button class="btn btn-outline-danger">Outline danger</button><button class="btn btn-outline-dark">Outline dark</button>
+  </div>
+  <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+    <button class="btn btn-primary btn-lg">Grande</button><button class="btn btn-primary">Normal</button>
+    <button class="btn btn-primary btn-sm">Pequeño</button><button class="btn btn-primary" disabled>Desactivado</button>
+    <button class="btn btn-danger"><i class="bi bi-lightning-fill me-1" aria-hidden="true"></i>Con icono</button>
+    <button class="btn btn-dark"><span class="runa me-2" style="color:var(--brasa)" aria-hidden="true">ᛉ</span>Con runa</button>
+  </div>
+  <div class="d-flex flex-wrap gap-3">
+    <div class="btn-group" role="group" aria-label="Arma">
+      <button class="btn btn-dark">Hacha</button><button class="btn btn-dark">Espada</button><button class="btn btn-dark">Lanza</button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Montura">
+      <input type="radio" class="btn-check" name="montura" id="m1" checked><label class="btn btn-outline-secondary" for="m1">Caballo</label>
+      <input type="radio" class="btn-check" name="montura" id="m2"><label class="btn btn-outline-secondary" for="m2">Camello</label>
+      <input type="radio" class="btn-check" name="montura" id="m3"><label class="btn btn-outline-secondary" for="m3">A pie</label>
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Acciones</button>
+      <ul class="dropdown-menu"><li><a class="dropdown-item" href="#">Afilar</a></li><li><a class="dropdown-item active" href="#">Blandir</a></li><li><a class="dropdown-item" href="#">Envainar</a></li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORMULARIOS ============ -->
+<section id="juramento" class="panel-piel">
+  <h2 data-runa-titulo="ᚷ">Juramento de guerra</h2>
+  <form class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+      <label for="nombre" class="form-label">Nombre de guerrero</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Como te llaman en las tabernas" required>
+      <div class="invalid-feedback">Escribe tu nombre para jurar.</div>
+    </div>
+    <div class="col-md-6">
+      <label for="clan" class="form-label">Clan</label>
+      <select class="form-select" id="clan" required>
+        <option value="">Elige tu clan</option><option>Lobos de la estepa</option><option>Hijos del sol</option><option>Cuervos de hierro</option>
+      </select>
+      <div class="invalid-feedback">Elige un clan para continuar.</div>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label" for="oro">Oro ofrecido</label>
+      <div class="input-group">
+        <span class="input-group-text runa" aria-hidden="true">ᚠ</span>
+        <input type="number" class="form-control" id="oro" placeholder="0" aria-describedby="oroAyuda">
+        <span class="input-group-text">monedas</span>
+      </div>
+      <div id="oroAyuda" class="form-text">El jefe se queda la décima parte.</div>
+    </div>
+    <div class="col-md-6">
+      <label for="dios" class="form-label">Dios al que juras</label>
+      <input class="form-control" list="dioses" id="dios" placeholder="Empieza a escribir">
+      <datalist id="dioses"><option value="Varrok"><option value="Ishara"><option value="Ondra"></datalist>
+    </div>
+    <div class="col-md-6">
+      <div class="form-floating">
+        <input type="email" class="form-control" id="mensajero" placeholder="nombre@tribu.com">
+        <label for="mensajero">Correo del mensajero</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="escudo" class="form-label">Escudo del clan</label>
+      <input class="form-control" type="file" id="escudo">
+    </div>
+    <div class="col-12">
+      <label for="hazanas" class="form-label">Hazañas</label>
+      <textarea class="form-control" id="hazanas" rows="3" placeholder="Cuenta tus victorias"></textarea>
+    </div>
+    <div class="col-md-6">
+      <label for="fuerza" class="form-label">Fuerza</label>
+      <input type="range" class="form-range" id="fuerza" min="0" max="10">
+    </div>
+    <div class="col-md-6">
+      <label for="deshabilitado" class="form-label">Campo desactivado</label>
+      <input type="text" class="form-control" id="deshabilitado" value="Solo el chamán puede editarlo" disabled>
+    </div>
+    <div class="col-md-4">
+      <div class="form-check"><input class="form-check-input" type="checkbox" id="c1" checked><label class="form-check-label" for="c1">Lleva escudo</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" id="c2"><label class="form-check-label" for="c2">Lleva yelmo</label></div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-check"><input class="form-check-input" type="radio" name="r" id="r1" checked><label class="form-check-label" for="r1">Ataque frontal</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="r" id="r2"><label class="form-check-label" for="r2">Emboscada</label></div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="s1" checked><label class="form-check-label" for="s1">Aceptar mercenarios</label></div>
+      <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="s2" disabled><label class="form-check-label" for="s2">Pacto con hechiceros</label></div>
+    </div>
+    <div class="col-12 d-flex flex-wrap gap-2">
+      <button class="btn btn-danger" type="submit">Jurar lealtad</button>
+      <button class="btn btn-secondary" type="reset">Limpiar</button>
+    </div>
+  </form>
+</section>
+
+<!-- ============ TABLAS ============ -->
+<section id="escaramuzas" class="panel-piel">
+  <h2 data-runa-titulo="ᚦ">Escaramuzas</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <caption>Últimas escaramuzas de la tribu</caption>
+      <thead><tr><th scope="col">Luna</th><th scope="col">Lugar</th><th scope="col">Contra</th><th scope="col">Guerreros</th><th scope="col">Resultado</th><th scope="col">Botín</th></tr></thead>
+      <tbody>
+        <tr><td>3.ª</td><td>Paso de la víbora</td><td>Jinetes del norte</td><td>24</td><td><span class="badge text-bg-success">Victoria</span></td><td>120 oro</td></tr>
+        <tr><td>5.ª</td><td>Pozo de Ondra</td><td>Saqueadores</td><td>9</td><td><span class="badge text-bg-success">Victoria</span></td><td>4 camellos</td></tr>
+        <tr class="table-active"><td>6.ª</td><td>Ruinas del coloso</td><td>Culto sin nombre</td><td>31</td><td><span class="badge text-bg-danger">Derrota</span></td><td>Nada</td></tr>
+        <tr><td>8.ª</td><td>Llanura de las calaveras</td><td>Clan del cuervo</td><td>17</td><td><span class="badge text-bg-warning">Tregua</span></td><td>Rehenes</td></tr>
+      </tbody>
+      <tfoot><tr><th scope="row" colspan="3">Total de guerreros</th><td>81</td><td colspan="2"></td></tr></tfoot>
+    </table>
+  </div>
+  <table class="table table-bordered table-sm mt-4">
+    <thead><tr><th scope="col">Arma</th><th scope="col">Daño</th><th scope="col">Peso</th></tr></thead>
+    <tbody><tr><td>Espada larga</td><td>8</td><td>3 kg</td></tr><tr><td>Hacha doble</td><td>9</td><td>4 kg</td></tr><tr><td>Lanza</td><td>6</td><td>2 kg</td></tr></tbody>
+  </table>
+</section>
+
+<!-- ============ ALERTAS Y BADGES ============ -->
+<section id="presagios" class="panel-piel">
+  <h2 data-runa-titulo="ᛊ">Presagios</h2>
+  <div class="alert alert-primary" role="alert">El sol está alto. Buen momento para comerciar.</div>
+  <div class="alert alert-secondary" role="alert">Los exploradores vuelven mañana al campamento.</div>
+  <div class="alert alert-success" role="alert">Pozo encontrado. Hay agua para tres días más.</div>
+  <div class="alert alert-info" role="alert">Mensaje del chamán: tormenta de arena al este, rodea por el sur.</div>
+  <div class="alert alert-warning" role="alert">Quedan pocas antorchas para la noche.</div>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <h3 class="alert-heading h5">Emboscada en la cresta norte</h3>
+    <p class="mb-0">Hay jinetes armados. Reúne a los guerreros antes del anochecer.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+  </div>
+  <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+    <span class="badge text-bg-primary">Primary</span><span class="badge text-bg-secondary">Secondary</span>
+    <span class="badge text-bg-success">Success</span><span class="badge text-bg-danger">Danger</span>
+    <span class="badge text-bg-warning">Warning</span><span class="badge text-bg-info">Info</span>
+    <span class="badge text-bg-dark">Dark</span><span class="badge rounded-pill text-bg-light">Light</span>
+    <button type="button" class="btn btn-dark position-relative ms-2">Mensajes
+      <span class="position-absolute top-0 start-100 translate-middle badge text-bg-danger">9<span class="visually-hidden"> sin leer</span></span>
+    </button>
+  </div>
+</section>
+
+<!-- ============ NAVEGACIÓN ============ -->
+<section id="caminos" class="panel-piel">
+  <h2 data-runa-titulo="ᚱ">Caminos</h2>
+  <nav aria-label="Ruta actual">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="#">Campamento</a></li><li class="breadcrumb-item"><a href="#">Tierras</a></li><li class="breadcrumb-item active" aria-current="page">Paso de la víbora</li></ol>
+  </nav>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation"><button class="nav-link active" id="t1-tab" data-bs-toggle="tab" data-bs-target="#t1" type="button" role="tab" aria-controls="t1" aria-selected="true">Día</button></li>
+    <li class="nav-item" role="presentation"><button class="nav-link" id="t2-tab" data-bs-toggle="tab" data-bs-target="#t2" type="button" role="tab" aria-controls="t2" aria-selected="false">Noche</button></li>
+    <li class="nav-item" role="presentation"><button class="nav-link" id="t3-tab" data-bs-toggle="tab" data-bs-target="#t3" type="button" role="tab" aria-controls="t3" aria-selected="false">Tormenta</button></li>
+  </ul>
+  <div class="tab-content mb-4">
+    <div class="tab-pane fade show active" id="t1" role="tabpanel" aria-labelledby="t1-tab">Marcha temprano y descansa a la sombra al mediodía.</div>
+    <div class="tab-pane fade" id="t2" role="tabpanel" aria-labelledby="t2-tab">Guíate por las estrellas y enciende fuego solo en las hondonadas.</div>
+    <div class="tab-pane fade" id="t3" role="tabpanel" aria-labelledby="t3-tab">Cúbrete la cara, ata los caballos y espera a que pase.</div>
+  </div>
+  <ul class="nav nav-pills mb-4">
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Activo</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Mapa</a></li>
+    <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Desactivado</a></li>
+  </ul>
+  <nav aria-label="Paginación">
+    <ul class="pagination mb-0">
+      <li class="page-item disabled"><a class="page-link">Anterior</a></li>
+      <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+    </ul>
+  </nav>
+</section>
+
+<!-- ============ ACORDEÓN Y LISTAS ============ -->
+<section id="cronicas" class="panel-piel">
+  <h2 data-runa-titulo="ᛚ">Crónicas</h2>
+  <div class="row g-4">
+    <div class="col-md-7">
+      <div class="accordion" id="acc">
+        <div class="accordion-item">
+          <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">El código del clan</button></h3>
+          <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#acc"><div class="accordion-body">No se abandona a un hermano en la arena. No se roba el agua de otro.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">El reparto del botín</button></h3>
+          <div id="a2" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">Una parte para el jefe, otra para los caídos y el resto a partes iguales.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">Los juramentos</button></h3>
+          <div id="a3" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">Se juran con sangre y acero frente al fuego del campamento.</div></div>
+        </div>
+      </div>
+      <p class="mt-3 mb-2">
+        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#colapso" aria-expanded="false" aria-controls="colapso">Mostrar secreto</button>
+      </p>
+      <div class="collapse" id="colapso"><div class="card card-body">El oasis verdadero está detrás de la segunda duna roja.</div></div>
+    </div>
+    <div class="col-md-5">
+      <ul class="list-group">
+        <li class="list-group-item active" aria-current="true">Equipo</li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Espada de hierro <span class="badge text-bg-dark">1</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Odres de agua <span class="badge text-bg-info">4</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Antorchas <span class="badge text-bg-warning">6</span></li>
+        <li class="list-group-item disabled" aria-disabled="true">Amuleto perdido</li>
+      </ul>
+      <div class="list-group mt-3">
+        <a href="#" class="list-group-item list-group-item-action">Ver mapa del oasis</a>
+        <a href="#" class="list-group-item list-group-item-action">Preguntar al anciano</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARRUSEL ============ -->
+<section id="visiones" class="panel-piel">
+  <h2 data-runa-titulo="ᛞ">Visiones</h2>
+  <div id="carouselDemo" class="carousel slide">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselDemo" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Visión 1"></button>
+      <button type="button" data-bs-target="#carouselDemo" data-bs-slide-to="1" aria-label="Visión 2"></button>
+      <button type="button" data-bs-target="#carouselDemo" data-bs-slide-to="2" aria-label="Visión 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active"><div class="slide" style="background:linear-gradient(180deg,#A7BBB3,#E8DDAB 55%,#D6A13C)"><span class="runa" aria-hidden="true">ᛊ</span></div>
+        <div class="carousel-caption"><h3>El sol pálido</h3><p>La marcha empieza cuando cae el calor.</p></div></div>
+      <div class="carousel-item"><div class="slide" style="background:linear-gradient(180deg,#B3B08A,#AAA56B 55%,#5F5E31)"><span class="runa" aria-hidden="true">ᚱ</span></div>
+        <div class="carousel-caption"><h3>La estepa seca</h3><p>Hierba amarilla hasta donde alcanza la vista.</p></div></div>
+      <div class="carousel-item"><div class="slide" style="background:linear-gradient(180deg,#060A1A,#213257 60%,#384C72)"><span class="runa" aria-hidden="true">ᛏ</span></div>
+        <div class="carousel-caption"><h3>La noche de la luna grande</h3><p>Las constelaciones marcan el camino.</p></div></div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselDemo" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span></button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselDemo" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span></button>
+  </div>
+</section>
+
+<!-- ============ PROGRESO Y CARGA ============ -->
+<section id="rituales" class="panel-piel">
+  <h2 data-runa-titulo="ᛇ">Rituales en curso</h2>
+  <div class="progress mb-3" role="progressbar" aria-label="Fuerza" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar" style="width:70%">Fuerza 70%</div></div>
+  <div class="progress mb-3" role="progressbar" aria-label="Vida" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width:40%">Vida 40%</div></div>
+  <div class="progress-stacked mb-4">
+    <div class="progress" role="progressbar" aria-label="Infantería" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:30%"><div class="progress-bar bg-dark"></div></div>
+    <div class="progress" role="progressbar" aria-label="Caballería" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width:25%"><div class="progress-bar bg-success"></div></div>
+    <div class="progress" role="progressbar" aria-label="Arqueros" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%"><div class="progress-bar"></div></div>
+  </div>
+  <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
+    <div class="spinner-runas" role="status">
+      <span aria-hidden="true" style="--i:0">ᚠ</span><span aria-hidden="true" style="--i:1">ᚢ</span><span aria-hidden="true" style="--i:2">ᚦ</span><span aria-hidden="true" style="--i:3">ᚨ</span>
+      <span aria-hidden="true" style="--i:4">ᚱ</span><span aria-hidden="true" style="--i:5">ᚲ</span><span aria-hidden="true" style="--i:6">ᚷ</span><span aria-hidden="true" style="--i:7">ᚹ</span>
+      <span class="visually-hidden">Cargando</span>
+    </div>
+    <div class="spinner-border text-danger" role="status"><span class="visually-hidden">Cargando</span></div>
+    <div class="spinner-grow text-secondary" role="status"><span class="visually-hidden">Cargando</span></div>
+    <button class="btn btn-primary" type="button" disabled><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Forjando</button>
+  </div>
+  <div class="card" aria-hidden="true" style="max-width:22rem">
+    <div class="card-body">
+      <h3 class="card-title h5 placeholder-glow"><span class="placeholder col-6"></span></h3>
+      <p class="card-text placeholder-glow"><span class="placeholder col-7"></span> <span class="placeholder col-4"></span> <span class="placeholder col-6"></span></p>
+      <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EMERGENTES ============ -->
+<section id="emergentes" class="panel-piel">
+  <h2 data-runa-titulo="ᛉ">Emergentes</h2>
+  <p>Modal, offcanvas, toast, tooltip y popover.</p>
+  <div class="d-flex flex-wrap gap-2">
+    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDemo">Abrir modal</button>
+    <button class="btn btn-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDemo" aria-controls="offcanvasDemo">Abrir offcanvas</button>
+    <button class="btn btn-primary" id="btnToast">Mostrar toast</button>
+    <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-title="Un buen tajo vale más que mil palabras">Tooltip</button>
+    <button class="btn btn-cuero" data-bs-toggle="popover" data-bs-title="Consejo del chamán" data-bs-content="Nunca bebas de un pozo sin huellas alrededor.">Popover</button>
+  </div>
+</section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer-pelaje pelaje pt-5 pb-4">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-5"><h2><span class="runa me-2" aria-hidden="true">ᛏ</span>Tribu del Albero</h2><p class="mb-0">Boilerplate de Bootstrap 5.3 con estilo bárbaro del desierto.</p></div>
+      <div class="col-6 col-md-3"><h2>Campamento</h2><ul class="list-unstyled"><li><a href="#">Inicio</a></li><li><a href="#panteon">Panteón</a></li><li><a href="#escaramuzas">Escaramuzas</a></li></ul></div>
+      <div class="col-6 col-md-4"><h2>Mensajeros</h2><ul class="list-unstyled"><li><a href="#">Contacto</a></li><li><a href="#">Aviso legal</a></li></ul></div>
+    </div>
+    <div class="separador-runico" aria-hidden="true" style="color:var(--albero)">ᚠᚢᚦᚨᚱᚲᚷᚹ</div>
+    <small>Hecho con acero, piel y arena.</small>
+  </div>
+</footer>
+
+<!-- ============ MODAL ============ -->
+<div class="modal fade" id="modalDemo" tabindex="-1" aria-labelledby="modalTitulo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h2 class="modal-title h5" id="modalTitulo"><span class="runa-brasa me-2" aria-hidden="true">ᛟ</span>Invocación</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button></div>
+      <div class="modal-body"><p class="mb-0">Los dioses escuchan, pero siempre piden algo a cambio. ¿Ofreces tu espada?</p></div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Todavía no</button><button type="button" class="btn btn-danger" data-bs-dismiss="modal">Ofrecer la espada</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OFFCANVAS ============ -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDemo" aria-labelledby="offcanvasTitulo">
+  <div class="offcanvas-header"><h2 class="offcanvas-title h5" id="offcanvasTitulo">Tienda del jefe</h2><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button></div>
+  <div class="offcanvas-body">
+    <p>Panel lateral para menús, filtros o el perfil del usuario.</p>
+    <div class="list-group"><a href="#" class="list-group-item list-group-item-action">Mi perfil</a><a href="#" class="list-group-item list-group-item-action">Mis armas</a><a href="#" class="list-group-item list-group-item-action">Salir del campamento</a></div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="toastDemo" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header"><span class="runa-brasa me-2" aria-hidden="true">ᚨ</span><strong class="me-auto">Mensajero</strong><small>ahora</small><button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button></div>
+    <div class="toast-body">Los exploradores han vuelto con noticias del norte.</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="assets/js/base.js"></script>
+</body>
+</html>

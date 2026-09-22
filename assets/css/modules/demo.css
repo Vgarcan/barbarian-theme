@@ -1,0 +1,26 @@
+/* Estilos exclusivos de la página de demostración. */
+/* =====================================================================
+   DEMO — estilos solo de esta página de ejemplo (bórralos en tu proyecto)
+   ===================================================================== */
+.hero { position: relative; min-height: 94svh; display: flex; align-items: flex-start; padding-top: 16svh; }
+.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 50% at 22% 32%, var(--hero-velo), transparent 70%); pointer-events: none; }
+.hero .container { position: relative; }
+.hero h1 { color: var(--hero-texto); font-size: clamp(2.5rem, 6vw, 4.6rem); max-width: 14ch; text-shadow: var(--hero-sombra); }
+.hero .lead { color: var(--hero-lead); max-width: 36ch; text-shadow: var(--hero-sombra); }
+.hero .runas-hero { font-family: var(--fuente-runas); color: var(--hero-runas); letter-spacing: .5em; font-size: 1.1rem; }
+[data-bs-theme="dark"] .hero .runas-hero { text-shadow: 0 0 12px rgba(242,162,74,.7); }
+.contenido { padding-bottom: 4rem; }
+.contenido section { scroll-margin-top: 6rem; }
+.contenido section + section { margin-top: 2.75rem; }
+.contenido section > h2 { margin-bottom: 1.25rem; }
+.indice.panel-piel { position: sticky; top: 6.5rem; padding: 1.5rem 1.25rem; }
+.indice .nav-link { display: flex; align-items: center; gap: .65rem; padding: .28rem .4rem; color: var(--tinta); border-radius: .2rem; }
+.indice .nav-link::before { content: attr(data-runa); content: attr(data-runa) / ""; font-family: var(--fuente-runas); color: var(--borde); width: 1.1em; text-align: center; transition: color .25s, text-shadow .25s; }
+.indice .nav-link:hover { color: var(--acento); }
+.indice .nav-link.active { color: var(--acento); font-weight: 600; }
+.indice .nav-link.active::before { color: #C4661C; text-shadow: 0 0 9px var(--brasa); }
+[data-bs-theme="dark"] .indice .nav-link.active::before { color: var(--brasa); }
+.muestra { height: 3.2rem; border-radius: .3rem; border: 2px solid rgba(40,26,6,.35); box-shadow: var(--sombra-tallada); }
+.dios .card-body { display: flex; flex-direction: column; }
+.dios .card-body .mt-auto { padding-top: .75rem; }
+@media (max-width: 575.98px) { .contenido { padding-left: .6rem; padding-right: .6rem; } }

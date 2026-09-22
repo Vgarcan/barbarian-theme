@@ -1,0 +1,21 @@
+/* Modal, offcanvas, toast, tooltip y popover. */
+/* ================= MODAL / OFFCANVAS / TOAST / TOOLTIP / POPOVER ================= */
+.modal-content {
+  --bs-modal-bg: var(--sup-panel); --bs-modal-color: var(--tinta); --bs-modal-border-color: var(--cabecera-bg); --bs-modal-border-width: 2px; --bs-modal-border-radius: .6rem; --bs-modal-inner-border-radius: .5rem;
+  --bs-modal-footer-border-color: var(--costura-color);
+  background-image: var(--tex-panel); box-shadow: inset 0 0 40px var(--vineta), 0 24px 60px rgba(5,3,8,.7);
+  outline: 2px dashed var(--costura-color); outline-offset: -8px;
+}
+.modal-header, .offcanvas-header, .toast-header {
+  position: relative; background-color: var(--pelaje); background-image: var(--tex-pelaje); background-size: 110px; color: var(--hueso); border-bottom: 0;
+}
+.modal-body, .offcanvas-body { padding-top: 1.75rem; }
+.modal-title, .offcanvas-title { font-family: var(--fuente-titulo); color: var(--albero-claro); }
+.modal-header .btn-close, .offcanvas-header .btn-close, .toast-header .btn-close { filter: invert(1) sepia(1); opacity: .85; }
+.modal-backdrop, .offcanvas-backdrop { --bs-backdrop-bg: #0a0810; --bs-backdrop-opacity: .72; }
+.offcanvas { --bs-offcanvas-bg: var(--sup-panel); --bs-offcanvas-color: var(--tinta); --bs-offcanvas-border-color: var(--cabecera-bg); background-image: var(--tex-panel); }
+.toast { --bs-toast-bg: var(--sup-card); --bs-toast-color: var(--tinta); --bs-toast-border-color: var(--cabecera-bg); --bs-toast-header-bg: var(--pelaje); --bs-toast-header-color: var(--hueso); border-width: 2px; background-image: var(--tex-panel); }
+.toast-header strong { font-family: var(--fuente-titulo); font-weight: 400; color: var(--albero-claro); }
+.tooltip { --bs-tooltip-bg: var(--pelaje); --bs-tooltip-color: var(--albero-claro); --bs-tooltip-opacity: 1; }
+.popover { --bs-popover-bg: var(--sup-card); --bs-popover-body-color: var(--tinta); --bs-popover-border-color: var(--cabecera-bg); --bs-popover-header-bg: var(--cabecera-bg); --bs-popover-header-color: var(--cabecera-texto); --bs-popover-border-width: 2px; }
+.popover-header { font-family: var(--fuente-titulo); }

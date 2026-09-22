@@ -1,0 +1,14 @@
+/* Navbar temática y su integración con Bootstrap. */
+/* ================= NAVBAR (pelaje + flecos) ================= */
+.navbar {
+  background-color: var(--pelaje) !important;
+  background-image: linear-gradient(180deg, rgba(255,230,190,.07), rgba(0,0,0,.35)), var(--tex-pelaje);
+  background-size: auto, 110px 110px;
+  z-index: 1030;
+}
+.navbar .navbar-brand { font-family: var(--fuente-titulo); color: var(--albero-claro); font-size: 1.35rem; }
+.navbar .navbar-brand .runa { color: var(--brasa); }
+.navbar .nav-link { color: #D8CBA8; }
+.navbar .nav-link:hover, .navbar .nav-link:focus-visible { color: var(--hueso); }
+.navbar .nav-link.active { color: var(--albero-claro); box-shadow: inset 0 -3px 0 var(--albero); }
+.navbar-toggler { border-color: var(--albero); }

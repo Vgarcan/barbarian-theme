@@ -1,0 +1,26 @@
+/* Controles y estados de formulario. */
+/* ================= FORMULARIOS ================= */
+.form-control, .form-select {
+  background-color: var(--sup-campo); background-image: var(--tex-grano);
+  border: 2px solid var(--borde-campo); box-shadow: var(--sombra-hundida); color: var(--tinta);
+}
+.form-select { background-image: var(--bs-form-select-bg-img), var(--tex-grano); }
+.form-control:focus, .form-select:focus { background-color: var(--sup-campo-foco); color: var(--tinta); border-color: var(--borde); box-shadow: var(--sombra-hundida), var(--anillo-brasa); }
+.form-control:disabled { background-color: var(--sup-hundida); opacity: .75; }
+.form-control::placeholder { color: var(--placeholder); font-style: italic; }
+.form-label, .col-form-label { font-weight: 600; }
+.form-floating > label { color: var(--placeholder); }
+.form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label { color: var(--tinta-suave); }
+.form-floating > .form-control:focus ~ label::after, .form-floating > .form-control:not(:placeholder-shown) ~ label::after { background-color: transparent; }
+.form-text { color: var(--tinta-suave); }
+.form-check-input { border: 2px solid var(--borde); background-color: var(--sup-campo); }
+.form-check-input:checked { background-color: var(--sangre); border-color: #4A150B; }
+.form-check-input:focus { border-color: var(--borde); box-shadow: var(--anillo-brasa); }
+.form-switch .form-check-input:checked { background-color: var(--verde-oscuro); border-color: #3A391C; }
+.input-group-text { background: var(--cabecera-bg); color: var(--cabecera-texto); border: 2px solid var(--cabecera-bg); font-family: var(--fuente-titulo); }
+.form-range:focus::-webkit-slider-thumb { box-shadow: var(--anillo-brasa); }
+.form-range::-webkit-slider-thumb { background: var(--sangre); }
+.form-range::-moz-range-thumb { background: var(--sangre); }
+.form-range::-webkit-slider-runnable-track { background: var(--sup-hundida); box-shadow: var(--sombra-hundida); }
+.form-range::-moz-range-track { background: var(--sup-hundida); }
+.form-control[type="file"]::file-selector-button { background: var(--cabecera-bg); color: var(--cabecera-texto); }

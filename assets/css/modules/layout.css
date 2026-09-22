@@ -1,0 +1,24 @@
+/* Footer, safe areas, canvas y preferencias de movimiento. */
+/* ================= FOOTER ================= */
+.footer-pelaje { color: #D3C6A2; }
+.footer-pelaje a { color: var(--albero-claro); }
+.footer-pelaje h2 { color: var(--albero-claro); font-size: 1.1rem; }
+
+/* ================= ZONAS SEGURAS EN MÓVIL ================= */
+:root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+.navbar.sticky-top { top: env(safe-area-inset-top, 0px); }
+.toast-container { padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px)) !important; }
+
+/* ================= FONDO VIVO ================= */
+#escena { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
+
+@media (max-width: 575.98px) {
+  .panel-piel { padding: 1.75rem 1.1rem; outline-offset: -8px; border-radius: 14px 20px 12px 22px / 18px 12px 20px 14px; }
+  .card { outline-offset: -5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .card-header[data-runa]::after { transition: none; }
+  .spinner-runas, .spinner-runas > span[aria-hidden] { animation-duration: 0s; animation-iteration-count: 1; }
+  .spinner-runas > span[aria-hidden] { opacity: .85; }
+}
