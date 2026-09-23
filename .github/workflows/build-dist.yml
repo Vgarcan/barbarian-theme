@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: barbarian-dist
+  group: barbarian-dist-v2
   cancel-in-progress: true
 
 jobs:
