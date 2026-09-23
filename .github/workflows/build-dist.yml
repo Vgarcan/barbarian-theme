@@ -51,5 +51,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "build: refresh distribution [skip ci]"
+          git commit -m "build: refresh distribution"
           git push
