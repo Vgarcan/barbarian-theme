@@ -133,6 +133,26 @@ BarbarianTheme.setColorMode('dark');
 BarbarianTheme.toggleColorMode();
 ```
 
+## KPI and character sheet components
+
+Barbarian Theme also includes reusable components for RPG character sheets and dashboards:
+
+- scalar KPI cards;
+- health / mana / stamina style resources;
+- attributes with min/max scales;
+- radial percentage indicators;
+- deltas and trend states;
+- a responsive character-sheet layout.
+
+Static KPIs work with CSS only. The optional JavaScript API can update values and accessibility metadata:
+
+```js
+BarbarianTheme.setKpiValue('#player-health', 72);
+BarbarianTheme.changeKpiValue('#player-health', -15);
+```
+
+See [KPI and character sheet components](docs/kpis.md).
+
 ## Theme and effects are separate
 
 The core theme does **not** import the desert scene.
