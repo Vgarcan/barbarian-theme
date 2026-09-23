@@ -1,4 +1,4 @@
-# barbarian-theme
+# Barbarian Theme
 
 <p align="center">
   <a href="https://vgarcan.github.io/barbarian-theme/"><strong>🌐 Visita la página</strong></a>
@@ -10,245 +10,286 @@
   </a>
 </p>
 
-A modular barbarian-inspired Bootstrap 5.3 theme with day/night modes, textured surfaces, runic details, reusable UI components, and an animated desert background.
+A configurable visual theme for **Bootstrap 5.3**. Standard Bootstrap buttons, forms, cards, navbars, modals, tables, alerts, navigation and feedback components adopt the Barbarian visual language without changing their markup.
 
-## Table of contents
+The desert canvas is an **optional effect**, not a dependency of the theme.
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Project structure](#project-structure)
-4. [Architecture](#architecture)
-5. [Quick start](#quick-start)
-6. [CSS entry point](#css-entry-point)
-7. [JavaScript entry point](#javascript-entry-point)
-8. [Theme system](#theme-system)
-9. [Bootstrap integration](#bootstrap-integration)
-10. [Performance notes](#performance-notes)
-11. [Development guidelines](#development-guidelines)
+## Use it in a Bootstrap project
 
-## Overview
-
-`barbarian-theme` is a reusable front-end theme built on top of Bootstrap 5.3. The project keeps the HTML entry point simple while separating CSS and JavaScript by responsibility.
-
-The page imports only one local stylesheet and one local JavaScript entry point:
+Load Bootstrap first and Barbarian Theme after it:
 
 ```html
-<link href="assets/css/base.css" rel="stylesheet">
-<script type="module" src="assets/js/base.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+>
+
+<link rel="stylesheet" href="barbarian-theme.min.css">
 ```
 
-Those two files coordinate the rest of the theme modules.
+That is enough for the CSS theme. Existing Bootstrap markup such as:
 
-## Features
+```html
+<button class="btn btn-primary">Attack</button>
 
-- Bootstrap 5.3 foundation.
-- Responsive layout and components.
-- Light and dark theme support.
-- Persistent theme preference through `localStorage`.
-- Runic typography and barbarian-inspired visual language.
-- Modular CSS architecture.
-- ES module-based JavaScript architecture.
-- Bootstrap tooltips, popovers, toast, modal, offcanvas, tabs, accordion, carousel and navigation examples.
-- Bootstrap form validation helpers.
-- Animated canvas desert scene with wind controls.
-- Reduced-motion support.
-- Local SVG textures.
+<div class="card">
+  <div class="card-header">Warband</div>
+  <div class="card-body">...</div>
+</div>
+```
 
-## Project structure
+is automatically styled by Barbarian Theme.
+
+The JavaScript bundle is optional:
+
+```html
+<script src="barbarian-theme.min.js"></script>
+```
+
+It provides helpers for color mode and visual variants. Bootstrap's own JavaScript remains responsible for Bootstrap behaviour such as modals, dropdowns and offcanvas.
+
+## Configuration API
+
+Customize the theme by overriding public `--barbarian-*` tokens. Components should not need to be edited.
+
+```css
+:root {
+  --barbarian-primary: #d6a13c;
+  --barbarian-leather: #8b5a33;
+  --barbarian-surface: #ddbf88;
+  --barbarian-border: #8b5a33;
+  --barbarian-radius: .25rem;
+}
+```
+
+Typical public tokens include:
+
+```css
+--barbarian-primary
+--barbarian-primary-light
+--barbarian-primary-dark
+--barbarian-secondary
+--barbarian-danger
+--barbarian-leather
+--barbarian-leather-dark
+--barbarian-fur
+--barbarian-bone
+--barbarian-ember
+
+--barbarian-surface
+--barbarian-surface-raised
+--barbarian-field
+--barbarian-field-focus
+--barbarian-sunken
+
+--barbarian-text
+--barbarian-text-muted
+--barbarian-heading
+--barbarian-accent
+--barbarian-border
+--barbarian-field-border
+
+--barbarian-radius
+--barbarian-radius-sm
+--barbarian-radius-lg
+
+--barbarian-font-body
+--barbarian-font-heading
+--barbarian-font-runes
+```
+
+See [Configuration](docs/configuration.md) for the full model.
+
+## Built-in variants
+
+The production CSS bundle includes five visual variants:
+
+- `desert` — default
+- `nordic`
+- `blood`
+- `ice`
+- `dark-kingdom`
+
+Set one on the document root:
+
+```html
+<html data-barbarian-variant="ice">
+```
+
+Color mode continues to use Bootstrap's standard attribute:
+
+```html
+<html
+  data-bs-theme="dark"
+  data-barbarian-variant="dark-kingdom"
+>
+```
+
+Or use the optional JS API:
+
+```js
+BarbarianTheme.setVariant('nordic');
+BarbarianTheme.setColorMode('dark');
+BarbarianTheme.toggleColorMode();
+```
+
+## Theme and effects are separate
+
+The core theme does **not** import the desert scene.
+
+A normal application can use only:
+
+```html
+<link rel="stylesheet" href="dist/barbarian-theme.min.css">
+```
+
+To opt into the desert effect:
+
+```html
+<link rel="stylesheet" href="dist/effects/desert.min.css">
+
+<canvas id="escena" aria-hidden="true"></canvas>
+
+<script src="dist/effects/desert.min.js"></script>
+<script>
+  BarbarianDesert.initDesertEffect();
+</script>
+```
+
+The effect is deliberately independent so dashboards, admin applications and normal Bootstrap sites do not pay for particles, wind or canvas rendering.
+
+## Project architecture
 
 ```text
 barbarian-theme/
+├── src/
+│   ├── barbarian-theme.css
+│   ├── barbarian-theme.js
+│   ├── core/
+│   │   ├── tokens.css
+│   │   ├── foundation.css
+│   │   ├── surfaces.css
+│   │   ├── runes.css
+│   │   ├── layout.css
+│   │   └── styles/
+│   │       └── _defaults.css
+│   ├── components/
+│   │   ├── buttons.css
+│   │   ├── cards.css
+│   │   ├── forms.css
+│   │   ├── navbar.css
+│   │   ├── tables.css
+│   │   ├── navigation.css
+│   │   ├── collections.css
+│   │   ├── overlays.css
+│   │   ├── feedback.css
+│   │   └── alerts-badges.css
+│   ├── themes/
+│   │   ├── desert.css
+│   │   ├── nordic.css
+│   │   ├── blood.css
+│   │   ├── ice.css
+│   │   └── dark-kingdom.css
+│   ├── effects/
+│   │   └── desert/
+│   │       ├── index.js
+│   │       ├── desert-scene.js
+│   │       └── effect.css
+│   └── img/
+│       └── texturas/
+├── demo/
+│   ├── demo.css
+│   └── demo.js
+├── dist/
+│   ├── barbarian-theme.css
+│   ├── barbarian-theme.min.css
+│   ├── barbarian-theme.js
+│   ├── barbarian-theme.min.js
+│   └── effects/
+├── scripts/
+│   └── build.mjs
 ├── index.html
-├── README.md
-└── assets/
-    ├── css/
-    │   ├── base.css
-    │   └── modules/
-    │       ├── tokens.css
-    │       ├── foundation.css
-    │       ├── surfaces.css
-    │       ├── runes.css
-    │       ├── navbar.css
-    │       ├── buttons.css
-    │       ├── cards.css
-    │       ├── forms.css
-    │       ├── alerts-badges.css
-    │       ├── tables.css
-    │       ├── navigation.css
-    │       ├── collections.css
-    │       ├── overlays.css
-    │       ├── feedback.css
-    │       ├── layout.css
-    │       └── demo.css
-    ├── img/
-    │   └── texturas/
-    │       ├── borde-pelaje.svg
-    │       ├── cuero-noche.svg
-    │       ├── cuero.svg
-    │       ├── grano.svg
-    │       ├── pelaje.svg
-    │       └── vetas.svg
-    └── js/
-        ├── base.js
-        └── modules/
-            ├── bootstrap-components.js
-            ├── desert-scene.js
-            ├── form-validation.js
-            └── theme.js
+└── package.json
 ```
 
-## Architecture
+### Responsibility boundaries
 
-The project follows a simple rule:
+**Core** contains design tokens, typography, reusable surfaces and shared layout rules.
 
-> `index.html` knows the entry points. The entry points know the modules.
+**Components** skin normal Bootstrap selectors. They contain no demo logic and no desert animation.
 
-This keeps the HTML independent from implementation details and makes individual responsibilities easier to maintain or replace.
+**Themes** change public tokens only. A new visual family should normally be implemented here rather than editing every component.
 
-### CSS responsibilities
+**Effects** are optional presentation extras and are never imported by the core theme.
 
-`assets/css/base.css` is the only local stylesheet imported by the page. It imports the CSS modules in a deliberate order so later modules can specialize earlier rules.
+**Demo** contains everything needed only by the documentation/showcase page.
 
-The modules are grouped by responsibility rather than by arbitrary file size:
+**Dist** contains production bundles generated from `src/`.
 
-- `tokens.css`: design tokens and shared CSS custom properties.
-- `foundation.css`: global document and element foundations.
-- `surfaces.css`: reusable themed surfaces and textures.
-- `runes.css`: runic visual elements.
-- `navbar.css`: navigation bar styling.
-- `buttons.css`: button variants.
-- `cards.css`: card styling.
-- `forms.css`: form controls and validation appearance.
-- `alerts-badges.css`: alerts and badges.
-- `tables.css`: table presentation.
-- `navigation.css`: tabs, breadcrumb and related navigation components.
-- `collections.css`: lists and grouped content.
-- `overlays.css`: modal, offcanvas and dropdown-related presentation.
-- `feedback.css`: toast, progress and feedback elements.
-- `layout.css`: page-level layout rules.
-- `demo.css`: styles used specifically by the component showcase page.
+## Production bundles
 
-## Quick start
+The build creates:
 
-The project is static and does not require a build step.
+```text
+dist/barbarian-theme.css
+dist/barbarian-theme.min.css
+dist/barbarian-theme.js
+dist/barbarian-theme.min.js
 
-Because the JavaScript uses native ES modules, serve the directory through a local HTTP server instead of opening `index.html` directly with `file://`.
+dist/effects/desert.css
+dist/effects/desert.min.css
+dist/effects/desert.js
+dist/effects/desert.min.js
+```
 
-For example, with Python:
+SVG textures are bundled into the production CSS by esbuild, so the main stylesheet can be distributed as a self-contained visual skin.
+
+## Development
+
+Install the build dependency:
 
 ```bash
-python -m http.server 8000
+npm install
 ```
 
-Then open:
+Generate all production files:
 
-```text
-http://localhost:8000
+```bash
+npm run build
 ```
 
-## CSS entry point
+The project uses **esbuild** for CSS bundling, JavaScript bundling and minification.
 
-The page loads:
+The GitHub Actions build also regenerates and commits `dist/` when source files change.
+
+## Showcase
+
+`index.html` is no longer the application architecture. It is only the **documentation and component showcase**.
+
+Importantly, the showcase consumes:
 
 ```html
-<link href="assets/css/base.css" rel="stylesheet">
+<link rel="stylesheet" href="dist/barbarian-theme.min.css">
+<script src="dist/barbarian-theme.min.js"></script>
 ```
 
-`base.css` imports every CSS responsibility:
+so the live GitHub Page exercises the same production bundle that another Bootstrap project would use.
 
-```css
-@import url('./modules/tokens.css');
-@import url('./modules/foundation.css');
-@import url('./modules/surfaces.css');
-/* ... */
-```
+## Performance
 
-When adding a new visual responsibility, create a module under `assets/css/modules/` and import it from `base.css` in the correct cascade position.
+The theme itself contains no continuously running animation.
 
-## JavaScript entry point
+The optional desert effect:
 
-The page loads:
+- starts static by default on mobile;
+- uses adaptive frame rates;
+- reduces particle density and device-pixel-ratio on smaller devices;
+- pauses while the page is hidden;
+- avoids expensive canvas rebuilds caused by mobile browser chrome resizing;
+- yields rendering budget during user interactions.
 
-```html
-<script type="module" src="assets/js/base.js"></script>
-```
+Mobile CSS also simplifies expensive texture and shadow composition where necessary.
 
-`base.js` is the application bootstrapper:
+## Current status
 
-```js
-import { initBootstrapComponents } from './modules/bootstrap-components.js';
-import { initFormValidation } from './modules/form-validation.js';
-import { initTheme } from './modules/theme.js';
-import { initDesertScene } from './modules/desert-scene.js';
-```
-
-Each module exposes its own initialization function and owns one responsibility.
-
-### JavaScript modules
-
-- `bootstrap-components.js`: explicit Bootstrap component initialization and toast behaviour.
-- `form-validation.js`: Bootstrap validation state and reset handling.
-- `theme.js`: day/night state, persistence and theme events.
-- `desert-scene.js`: animated canvas background and wind behaviour.
-
-The modules are intentionally decoupled. For example, Bootstrap initialization checks that `window.bootstrap` exists before using it, so a failed external Bootstrap script does not automatically prevent the other local modules from starting.
-
-## Theme system
-
-The active theme is stored in:
-
-```text
-tema-barbaro
-```
-
-inside `localStorage`.
-
-The page applies the saved theme before the first render to reduce visible theme flashing.
-
-The theme module also dispatches a custom event:
-
-```text
-tema-cambiado
-```
-
-Other modules can react to theme changes without directly depending on the theme toggle implementation.
-
-## Bootstrap integration
-
-External dependencies currently loaded from CDN are:
-
-- Bootstrap 5.3.3 CSS.
-- Bootstrap 5.3.3 JavaScript bundle.
-- Bootstrap Icons 1.11.3.
-- Google Fonts.
-
-The custom theme stylesheet is loaded after Bootstrap so it can intentionally override framework defaults.
-
-## Performance notes
-
-The animated desert scene is the most computationally expensive part of the theme. On desktop it uses a throttled `<canvas>` animation; on mobile the scene starts static by default to prioritize scrolling and UI responsiveness, and animation can be enabled manually with the wind control.
-
-If interaction performance becomes a priority, `assets/js/modules/desert-scene.js` should be profiled before changing unrelated UI modules. Useful optimization directions include:
-
-- limiting device pixel ratio;
-- reducing per-frame particle counts;
-- caching static canvas layers;
-- pausing animation while the page is hidden;
-- reducing animation work on smaller or slower devices;
-- lowering the target frame rate when full 60 FPS animation is unnecessary.
-
-The scene already observes the user's reduced-motion preference and exposes a wind control in the UI.
-
-## Development guidelines
-
-When extending the theme:
-
-1. Keep `index.html` dependent only on the public entry points where possible.
-2. Add CSS to the module that owns the visual responsibility.
-3. Add JavaScript to the module that owns the behaviour.
-4. Create a new module when a responsibility is genuinely independent.
-5. Import new modules through `base.css` or `base.js` rather than directly from the HTML.
-6. Guard optional DOM elements before attaching listeners.
-7. Avoid making one optional dependency capable of stopping unrelated functionality.
-8. Prefer events or small public functions for communication between modules instead of cross-module DOM coupling.
-
+Barbarian Theme is currently an early reusable library release (`0.1.x`). The API is usable, but names and packaging may still evolve before a first stable release.
