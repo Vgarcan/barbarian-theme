@@ -33,3 +33,21 @@
 .dios .card-body { display: flex; flex-direction: column; }
 .dios .card-body .mt-auto { padding-top: .75rem; }
 @media (max-width: 575.98px) { .contenido { padding-left: .6rem; padding-right: .6rem; } }
+
+/* Showcase controls. These are documentation styles, not theme API. */
+.barbarian-variant-select {
+  width: auto;
+  min-width: 8.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .hero h1,
+  .hero .lead,
+  [data-bs-theme="dark"] .hero .runas-hero {
+    text-shadow: none;
+  }
+
+  .barbarian-variant-select {
+    flex: 1 1 9rem;
+  }
+}
