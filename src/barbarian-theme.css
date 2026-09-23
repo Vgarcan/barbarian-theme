@@ -2,7 +2,6 @@
  * Barbarian Theme
  * Bootstrap remains the framework; this file is the visual skin.
  */
-@import url('./core/styles/_defaults.css');
 @import url('./core/tokens.css');
 
 @import url('./themes/desert.css');
