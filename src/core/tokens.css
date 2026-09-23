@@ -25,9 +25,11 @@
   --barbarian-danger-rgb: 124, 42, 26;
 
   --barbarian-bone: #F2E7CC;
+  --barbarian-bone-rgb: 242, 231, 204;
   --barbarian-leather: #8B5A33;
   --barbarian-leather-dark: #4A2C18;
   --barbarian-fur: #3A2B1F;
+  --barbarian-fur-rgb: 58, 43, 31;
   --barbarian-ember: #F2A24A;
 
   /* ---------- Public semantic surfaces ---------- */
@@ -44,6 +46,7 @@
   --barbarian-text-muted: rgba(47, 35, 19, .74);
   --barbarian-heading: #4A2C18;
   --barbarian-accent: #7C2A1A;
+  --barbarian-accent-rgb: 124, 42, 26;
   --barbarian-rune: #7C2A1A;
 
   --barbarian-header-bg: #4A2C18;
@@ -171,7 +174,9 @@
   --bs-danger: var(--barbarian-danger);
   --bs-danger-rgb: var(--barbarian-danger-rgb);
   --bs-light: var(--barbarian-bone);
+  --bs-light-rgb: var(--barbarian-bone-rgb);
   --bs-dark: var(--barbarian-fur);
+  --bs-dark-rgb: var(--barbarian-fur-rgb);
 
   --bs-primary-text-emphasis: color-mix(in srgb, var(--barbarian-primary) 55%, black);
   --bs-primary-bg-subtle: color-mix(in srgb, var(--barbarian-primary) 35%, white);
@@ -202,6 +207,7 @@
   --bs-body-color: var(--barbarian-text);
   --bs-body-color-rgb: var(--barbarian-text-rgb);
   --bs-emphasis-color: color-mix(in srgb, var(--barbarian-text) 85%, black);
+  --bs-emphasis-color-rgb: var(--barbarian-text-rgb);
   --bs-secondary-color: var(--barbarian-text-muted);
   --bs-secondary-bg: var(--barbarian-surface);
   --bs-tertiary-bg: var(--barbarian-sunken);
@@ -209,7 +215,9 @@
   --bs-border-color-translucent: color-mix(in srgb, var(--barbarian-border) 30%, transparent);
   --bs-heading-color: var(--barbarian-heading);
   --bs-link-color: var(--barbarian-accent);
+  --bs-link-color-rgb: var(--barbarian-accent-rgb);
   --bs-link-hover-color: color-mix(in srgb, var(--barbarian-accent) 70%, black);
+  --bs-link-hover-color-rgb: var(--barbarian-accent-rgb);
   --bs-code-color: var(--barbarian-danger);
   --bs-highlight-bg: var(--barbarian-primary-light);
   --bs-highlight-color: var(--barbarian-text);
@@ -246,6 +254,7 @@
   --barbarian-text-muted: rgba(237, 226, 200, .72);
   --barbarian-heading: #E9C77F;
   --barbarian-accent: #E9B35A;
+  --barbarian-accent-rgb: 233, 179, 90;
   --barbarian-rune: #F2A24A;
 
   --barbarian-header-bg: #15100B;
@@ -324,6 +333,7 @@
   --bs-body-color: var(--barbarian-text);
   --bs-body-color-rgb: var(--barbarian-text-rgb);
   --bs-emphasis-color: color-mix(in srgb, var(--barbarian-text) 92%, white);
+  --bs-emphasis-color-rgb: var(--barbarian-text-rgb);
   --bs-secondary-color: var(--barbarian-text-muted);
   --bs-secondary-bg: var(--barbarian-surface);
   --bs-tertiary-bg: var(--barbarian-sunken);
@@ -331,7 +341,9 @@
   --bs-border-color-translucent: color-mix(in srgb, var(--barbarian-heading) 18%, transparent);
   --bs-heading-color: var(--barbarian-heading);
   --bs-link-color: var(--barbarian-accent);
+  --bs-link-color-rgb: var(--barbarian-accent-rgb);
   --bs-link-hover-color: color-mix(in srgb, var(--barbarian-accent) 75%, white);
+  --bs-link-hover-color-rgb: var(--barbarian-accent-rgb);
   --bs-code-color: var(--barbarian-ember);
   --bs-highlight-bg: color-mix(in srgb, var(--barbarian-primary) 45%, black);
   --bs-highlight-color: var(--barbarian-bone);

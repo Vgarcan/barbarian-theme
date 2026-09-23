@@ -10,6 +10,7 @@
   --barbarian-leather: #6A3D2A;
   --barbarian-leather-dark: #321B14;
   --barbarian-fur: #211514;
+  --barbarian-fur-rgb: 33, 21, 20;
   --barbarian-ember: #E05A3F;
   --barbarian-surface: #C9A38D;
   --barbarian-surface-raised: #E7D2C3;
@@ -18,6 +19,7 @@
   --barbarian-text-rgb: 43, 24, 21;
   --barbarian-heading: #5C1915;
   --barbarian-accent: #8B1E19;
+  --barbarian-accent-rgb: 139, 30, 25;
   --barbarian-border: #71392D;
 }
 
@@ -33,5 +35,6 @@
   --barbarian-text-rgb: 240, 221, 213;
   --barbarian-heading: #E39A87;
   --barbarian-accent: #D35E4C;
+  --barbarian-accent-rgb: 211, 94, 76;
   --barbarian-border: #704039;
 }

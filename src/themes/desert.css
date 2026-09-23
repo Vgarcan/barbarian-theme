@@ -9,9 +9,11 @@
   --barbarian-fur: #3A2B1F;
   --barbarian-ember: #F2A24A;
   --barbarian-accent: #7C2A1A;
+  --barbarian-accent-rgb: 124, 42, 26;
 }
 
 [data-barbarian-variant="desert"][data-bs-theme="dark"],
 [data-bs-theme="dark"] [data-barbarian-variant="desert"] {
   --barbarian-accent: #E9B35A;
+  --barbarian-accent-rgb: 233, 179, 90;
 }
