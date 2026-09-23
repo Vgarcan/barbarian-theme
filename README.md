@@ -6,20 +6,9 @@
 
 <p align="center">
   <a href="https://vgarcan.github.io/barbarian-theme/">
-    <img src="https://image.thum.io/get/width/1200/crop/700/maxAge/1/noanimate/https://vgarcan.github.io/barbarian-theme/" alt="Barbarian Theme live preview" width="100%">
+    <img src="assets/img/readme/barbarian-theme-screenshot.jpg" alt="Barbarian Theme live preview" width="100%">
   </a>
 </p>
-
-<details>
-<summary><strong>Ver captura ampliada</strong></summary>
-
-<p align="center">
-  <a href="https://vgarcan.github.io/barbarian-theme/">
-    <img src="https://image.thum.io/get/width/1000/crop/1500/maxAge/1/noanimate/https://vgarcan.github.io/barbarian-theme/" alt="Barbarian Theme extended preview" width="100%">
-  </a>
-</p>
-
-</details>
 
 A modular barbarian-inspired Bootstrap 5.3 theme with day/night modes, textured surfaces, runic details, reusable UI components, and an animated desert background.
 
