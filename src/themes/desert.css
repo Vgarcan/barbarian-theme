@@ -10,3 +10,8 @@
   --barbarian-ember: #F2A24A;
   --barbarian-accent: #7C2A1A;
 }
+
+[data-barbarian-variant="desert"][data-bs-theme="dark"],
+[data-bs-theme="dark"] [data-barbarian-variant="desert"] {
+  --barbarian-accent: #E9B35A;
+}
