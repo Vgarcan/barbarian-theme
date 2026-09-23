@@ -16,6 +16,33 @@ export function initDesertScene() {
   const mezclar = (a, b, m) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * m)).join(',')})`; };
   const suave = x => x * x * (3 - 2 * x);
 
+  /*
+   * Perfil adaptativo de rendimiento. El canvas es decorativo, por lo que
+   * priorizamos la respuesta de la interfaz sobre perseguir 60 FPS constantes.
+   */
+  function obtenerPerfilRendimiento() {
+    const movil = matchMedia('(max-width: 767.98px)').matches;
+    const pocosHilos = (navigator.hardwareConcurrency || 4) <= 4;
+    const bajaPotencia = movil || pocosHilos;
+
+    return {
+      fps: bajaPotencia ? 24 : 30,
+      fpsInteraccion: 15,
+      dprMax: movil ? 1 : (pocosHilos ? 1.1 : 1.25),
+      divisorMatas: movil ? 52 : (pocosHilos ? 44 : 36),
+      hojasMin: movil ? 5 : 6,
+      hojasMax: movil ? 10 : 12,
+      arenaMax: movil ? 80 : (pocosHilos ? 110 : 150),
+      divisorArena: movil ? 13000 : 9500,
+      polvo: movil ? 2 : 3,
+      divisorTitilan: movil ? 34 : 24,
+      viaLactea: movil ? 420 : (pocosHilos ? 650 : 900),
+      divisorEstrellas: movil ? 3400 : 2500
+    };
+  }
+
+  let rendimiento = obtenerPerfilRendimiento();
+
   /* ---------- Paletas ---------- */
   const DIA = {
     cielo: [[0, '#A7BBB3'], [.38, '#CBD2B3'], [.72, '#E8DDAB'], [1, '#F2E3AC']], relleno: '#F2E3AC',
@@ -52,7 +79,8 @@ export function initDesertScene() {
   let W = 0, H = 0, DPR = 1, esc = 1, horizonte = 0;
   let fondoDia = null, fondoNoche = null, circuloX = 0, piedras = [], brillos = [], totem = null;
   let matas = [], arena = [], rodadores = [], polvo = [], titilan = [], buitres = [], fugaces = [], constelaciones = [];
-  let activo = !menosMovimiento.matches, raf = 0, t = 0, prev = 0;
+  let activo = !menosMovimiento.matches, raf = 0, t = 0, prev = 0, ultimoPintado = 0;
+  let interaccionHasta = 0;
   let rafaga = 0, rafagaObj = 0, proxRafaga = 3, proxRodador = 4, proxFugaz = 3;
   const temaInicial = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 1 : 0;
   let mezclaLin = temaInicial, mezclaObj = temaInicial;
@@ -158,14 +186,14 @@ export function initDesertScene() {
       g.restore();
       const luna = posicionLuna();
       const fuera = (x, y) => Math.hypot(x - luna.x, y - luna.y) > luna.r * 1.6;
-      for (let i = 0; i < 1400; i++) {
+      for (let i = 0; i < rendimiento.viaLactea; i++) {
         const u = Math.random(), d = gauss() * H * .07;
         const x = x0 + (x1 - x0) * u - Math.sin(ang) * d, y = y0 + (y1 - y0) * u + Math.cos(ang) * d;
         if (y > horizonte || !fuera(x, y)) continue;
         g.fillStyle = `rgba(225,232,255,${R(.15, .6)})`; g.fillRect(x, y, R(.5, 1.3), R(.5, 1.3));
       }
       // Estrellas fijas
-      const n = Math.round(W * horizonte / 1900);
+      const n = Math.round(W * horizonte / rendimiento.divisorEstrellas);
       for (let i = 0; i < n; i++) {
         const x = R(0, W), y = Math.pow(Math.random(), 1.4) * horizonte * .95;
         if (!fuera(x, y)) continue;
@@ -269,7 +297,8 @@ export function initDesertScene() {
   }
 
   function construir() {
-    DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    rendimiento = obtenerPerfilRendimiento();
+    DPR = Math.min(window.devicePixelRatio || 1, rendimiento.dprMax);
     W = innerWidth; H = innerHeight; esc = Math.max(.6, Math.min(1.4, H / 900));
     cv.width = W * DPR; cv.height = H * DPR;
     geometria();
@@ -280,19 +309,19 @@ export function initDesertScene() {
 
   function iniciarElementos() {
     matas = [];
-    for (let i = 0, n = Math.round(W / 26); i < n; i++) {
+    for (let i = 0, n = Math.round(W / rendimiento.divisorMatas); i < n; i++) {
       const enSuelo = Math.random() < .72;
       const x = R(-10, W + 10), y = enSuelo ? suelo(x) + R(2, 14) : dunaCerca(x) + R(4, 20);
       const f = (enSuelo ? 1 : .55) * esc;
-      const hojas = Array.from({ length: R(7, 15) | 0 }, () => ({ dx: R(-5, 5) * f, ang: R(-.7, .7), largo: R(18, 58) * f, rig: R(.6, 1.3), c: (Math.random() * 5) | 0, ancho: R(.9, 1.9) * Math.sqrt(f), espiga: Math.random() < .25 }));
+      const hojas = Array.from({ length: R(rendimiento.hojasMin, rendimiento.hojasMax + 1) | 0 }, () => ({ dx: R(-5, 5) * f, ang: R(-.7, .7), largo: R(18, 58) * f, rig: R(.6, 1.3), c: (Math.random() * 5) | 0, ancho: R(.9, 1.9) * Math.sqrt(f), espiga: Math.random() < .25 }));
       matas.push({ x, y, hojas, fase: R(0, 6.28) });
     }
     matas.sort((a, b) => a.y - b.y);
-    arena = Array.from({ length: Math.min(260, Math.round(W * H / 7000)) }, () => nuevaArena(true));
-    polvo = Array.from({ length: 3 }, () => ({ x: R(0, W), y: H * R(.62, .86), rx: W * R(.25, .45), ry: H * R(.05, .09), v: R(.6, 1.2) }));
+    arena = Array.from({ length: Math.min(rendimiento.arenaMax, Math.round(W * H / rendimiento.divisorArena)) }, () => nuevaArena(true));
+    polvo = Array.from({ length: rendimiento.polvo }, () => ({ x: R(0, W), y: H * R(.62, .86), rx: W * R(.25, .45), ry: H * R(.05, .09), v: R(.6, 1.2) }));
     const luna = posicionLuna();
     titilan = [];
-    while (titilan.length < Math.round(W / 16)) {
+    while (titilan.length < Math.round(W / rendimiento.divisorTitilan)) {
       const x = R(0, W), y = R(0, horizonte * .75);
       if (Math.hypot(x - luna.x, y - luna.y) > luna.r * 1.5) titilan.push({ x, y, r: R(.6, 1.6), f: R(0, 6.28), v: R(.8, 2.4) });
     }
@@ -457,9 +486,29 @@ export function initDesertScene() {
     return suave(mezclaLin);
   }
 
+  /*
+   * requestAnimationFrame sigue sincronizando con el monitor, pero solo hacemos
+   * el trabajo caro del canvas cuando toca el siguiente frame objetivo. Durante
+   * clicks, scroll y transiciones de Bootstrap bajamos temporalmente a 15 FPS
+   * para dejar libre el hilo principal.
+   */
+  function marcarInteraccion(duracion = 320) {
+    interaccionHasta = Math.max(interaccionHasta, performance.now() + duracion);
+  }
+
   function bucle(ahora) {
-    const dt = prev ? Math.min(.05, (ahora - prev) / 1000) : .016;
-    prev = ahora; t += dt;
+    const fpsObjetivo = ahora < interaccionHasta ? rendimiento.fpsInteraccion : rendimiento.fps;
+    const intervalo = 1000 / fpsObjetivo;
+
+    if (ultimoPintado && ahora - ultimoPintado < intervalo) {
+      raf = requestAnimationFrame(bucle);
+      return;
+    }
+
+    const dt = prev ? Math.min(.06, (ahora - prev) / 1000) : intervalo / 1000;
+    prev = ahora;
+    ultimoPintado = ahora;
+    t += dt;
     proxRafaga -= dt;
     if (proxRafaga <= 0) { rafagaObj = R(.5, 1.4); proxRafaga = R(5, 11); }
     rafagaObj = Math.max(0, rafagaObj - dt * .18);
@@ -468,7 +517,12 @@ export function initDesertScene() {
     raf = requestAnimationFrame(bucle);
   }
 
-  function arrancar() { cancelAnimationFrame(raf); prev = 0; raf = requestAnimationFrame(bucle); }
+  function arrancar() {
+    cancelAnimationFrame(raf);
+    prev = 0;
+    ultimoPintado = 0;
+    raf = requestAnimationFrame(bucle);
+  }
   function parar() { cancelAnimationFrame(raf); raf = 0; }
   function fotoEstatica() { mezclaLin = mezclaObj; t = 3; dibujar(.6, 0, mezclaObj); }
 
@@ -486,6 +540,14 @@ export function initDesertScene() {
   addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(() => { construir(); if (!activo) fotoEstatica(); }, 150); });
   document.addEventListener('visibilitychange', () => { if (document.hidden) parar(); else if (activo) arrancar(); });
   if (btnViento) btnViento.addEventListener('click', () => ponerViento(!activo));
+
+  // Las interacciones de UI tienen prioridad sobre la animación decorativa.
+  document.addEventListener('pointerdown', () => marcarInteraccion(), { passive: true });
+  document.addEventListener('wheel', () => marcarInteraccion(220), { passive: true });
+  document.addEventListener('scroll', () => marcarInteraccion(180), { passive: true });
+  document.addEventListener('keydown', () => marcarInteraccion(), { passive: true });
+  ['show.bs.modal', 'hide.bs.modal', 'show.bs.offcanvas', 'hide.bs.offcanvas', 'show.bs.collapse', 'hide.bs.collapse', 'slide.bs.carousel']
+    .forEach(evento => document.addEventListener(evento, () => marcarInteraccion(480)));
 
   construir();
   fotoEstatica();
