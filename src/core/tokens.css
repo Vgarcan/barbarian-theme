@@ -1,10 +1,11 @@
 /**
- * Public configuration API.
+ * Barbarian Theme public configuration API.
  *
- * Consumers should override --barbarian-* variables only.
- * The older Spanish/internal variables remain aliases so components stay stable.
+ * Public API: override --barbarian-* variables.
+ * Internal aliases exist only to keep component CSS readable/stable.
  */
 :root {
+  /* ---------- Public palette ---------- */
   --barbarian-primary: #D6A13C;
   --barbarian-primary-rgb: 214, 161, 60;
   --barbarian-primary-light: #E9C77F;
@@ -12,6 +13,8 @@
 
   --barbarian-secondary: #8E8C4E;
   --barbarian-secondary-rgb: 142, 140, 78;
+  --barbarian-secondary-light: #AAA56B;
+
   --barbarian-success: #5F5E31;
   --barbarian-success-rgb: 95, 94, 49;
   --barbarian-info: #6E8580;
@@ -27,6 +30,8 @@
   --barbarian-fur: #3A2B1F;
   --barbarian-ember: #F2A24A;
 
+  /* ---------- Public semantic surfaces ---------- */
+  --barbarian-background: #EADFAE;
   --barbarian-surface: #DDBF88;
   --barbarian-surface-raised: #F1E0B8;
   --barbarian-surface-raised-rgb: 241, 224, 184;
@@ -39,17 +44,25 @@
   --barbarian-text-muted: rgba(47, 35, 19, .74);
   --barbarian-heading: #4A2C18;
   --barbarian-accent: #7C2A1A;
+  --barbarian-rune: #7C2A1A;
+
+  --barbarian-header-bg: #4A2C18;
+  --barbarian-header-text: #E9C77F;
   --barbarian-border: #8B5A33;
   --barbarian-field-border: #9C7244;
+  --barbarian-placeholder: #8A7650;
 
+  /* ---------- Shape and typography ---------- */
   --barbarian-radius: .25rem;
   --barbarian-radius-sm: .15rem;
   --barbarian-radius-lg: .55rem;
+  --barbarian-radius-pill: .4rem;
 
   --barbarian-font-body: "Alegreya", Georgia, "Times New Roman", serif;
   --barbarian-font-heading: "Uncial Antiqua", "Palatino Linotype", serif;
   --barbarian-font-runes: "Noto Sans Runic", "Segoe UI Historic", serif;
 
+  /* ---------- Texture API ---------- */
   --barbarian-texture-grain: url('../img/texturas/grano.svg');
   --barbarian-texture-veins: url('../img/texturas/vetas.svg');
   --barbarian-texture-leather: url('../img/texturas/cuero.svg');
@@ -57,37 +70,69 @@
   --barbarian-texture-fur: url('../img/texturas/pelaje.svg');
   --barbarian-texture-fur-edge: url('../img/texturas/borde-pelaje.svg');
 
-  /* Internal compatibility aliases. */
+  /* ---------- Derived semantics ---------- */
+  --barbarian-stitch: color-mix(in srgb, var(--barbarian-leather-dark) 55%, transparent);
+  --barbarian-vignette: color-mix(in srgb, var(--barbarian-leather-dark) 45%, transparent);
+  --barbarian-hover: color-mix(in srgb, var(--barbarian-primary) 30%, transparent);
+  --barbarian-list-surface: color-mix(in srgb, var(--barbarian-field) 70%, transparent);
+  --barbarian-panel-glow: rgba(255, 246, 222, .45);
+
+  --barbarian-shadow-carved:
+    inset 0 2px 0 rgba(255, 240, 200, .35),
+    inset 0 -3px 0 rgba(40, 25, 5, .35),
+    0 3px 0 #4f3a14,
+    0 6px 14px rgba(20, 10, 4, .35);
+
+  --barbarian-shadow-sunken:
+    inset 0 3px 6px rgba(40, 25, 5, .45),
+    inset 0 -1px 0 rgba(255, 240, 200, .25);
+
+  --barbarian-shadow-panel: 0 18px 40px rgba(70, 56, 22, .35);
+  --barbarian-focus-ring:
+    0 0 0 3px var(--barbarian-ember),
+    0 0 16px color-mix(in srgb, var(--barbarian-ember) 70%, transparent);
+
+  /* ---------- Internal component aliases ---------- */
   --albero: var(--barbarian-primary);
   --albero-claro: var(--barbarian-primary-light);
   --albero-oscuro: var(--barbarian-primary-dark);
   --verde-arido: var(--barbarian-secondary);
+  --verde-salvia: var(--barbarian-secondary-light);
   --verde-oscuro: var(--barbarian-success);
   --ocre: var(--barbarian-warning);
   --sangre: var(--barbarian-danger);
+  --hierro: #34332E;
   --hueso: var(--barbarian-bone);
   --cuero: var(--barbarian-leather);
+  --piel: var(--barbarian-surface);
   --cuero-oscuro: var(--barbarian-leather-dark);
   --pelaje: var(--barbarian-fur);
   --brasa: var(--barbarian-ember);
   --cielo-polvo: var(--barbarian-info);
-  --piel: var(--barbarian-surface);
 
+  --fondo-html: var(--barbarian-background);
   --sup-panel: var(--barbarian-surface);
   --sup-card: var(--barbarian-surface-raised);
   --sup-menu: var(--barbarian-surface-raised);
   --sup-campo: var(--barbarian-field);
   --sup-campo-foco: var(--barbarian-field-focus);
   --sup-hundida: var(--barbarian-sunken);
+  --sup-lista: var(--barbarian-list-surface);
+
   --tinta: var(--barbarian-text);
   --tinta-suave: var(--barbarian-text-muted);
   --titulo: var(--barbarian-heading);
   --acento: var(--barbarian-accent);
+  --runa-color: var(--barbarian-rune);
+
+  --cabecera-bg: var(--barbarian-header-bg);
+  --cabecera-texto: var(--barbarian-header-text);
   --borde: var(--barbarian-border);
   --borde-campo: var(--barbarian-field-border);
-
-  --fuente-titulo: var(--barbarian-font-heading);
-  --fuente-runas: var(--barbarian-font-runes);
+  --costura-color: var(--barbarian-stitch);
+  --vineta: var(--barbarian-vignette);
+  --hover: var(--barbarian-hover);
+  --placeholder: var(--barbarian-placeholder);
 
   --tex-grano: var(--barbarian-texture-grain);
   --tex-vetas: var(--barbarian-texture-veins);
@@ -97,7 +142,22 @@
   --tex-borde-pelaje: var(--barbarian-texture-fur-edge);
   --tex-panel: var(--barbarian-texture-leather);
 
-  /* Bootstrap bridge. */
+  --fuente-titulo: var(--barbarian-font-heading);
+  --fuente-runas: var(--barbarian-font-runes);
+  --sombra-tallada: var(--barbarian-shadow-carved);
+  --sombra-hundida: var(--barbarian-shadow-sunken);
+  --anillo-brasa: var(--barbarian-focus-ring);
+  --brillo-panel: var(--barbarian-panel-glow);
+  --sombra-panel: var(--barbarian-shadow-panel);
+
+  /* Demo-compatible visual tokens. */
+  --hero-texto: #33240F;
+  --hero-lead: #45351A;
+  --hero-velo: rgba(248, 242, 215, .6);
+  --hero-sombra: 0 1px 14px rgba(255, 250, 230, .85);
+  --hero-runas: var(--barbarian-leather);
+
+  /* ---------- Bootstrap bridge ---------- */
   --bs-primary: var(--barbarian-primary);
   --bs-primary-rgb: var(--barbarian-primary-rgb);
   --bs-secondary: var(--barbarian-secondary);
@@ -110,52 +170,176 @@
   --bs-warning-rgb: var(--barbarian-warning-rgb);
   --bs-danger: var(--barbarian-danger);
   --bs-danger-rgb: var(--barbarian-danger-rgb);
+  --bs-light: var(--barbarian-bone);
+  --bs-dark: var(--barbarian-fur);
+
+  --bs-primary-text-emphasis: color-mix(in srgb, var(--barbarian-primary) 55%, black);
+  --bs-primary-bg-subtle: color-mix(in srgb, var(--barbarian-primary) 35%, white);
+  --bs-primary-border-subtle: color-mix(in srgb, var(--barbarian-primary) 65%, white);
+
+  --bs-secondary-text-emphasis: color-mix(in srgb, var(--barbarian-secondary) 55%, black);
+  --bs-secondary-bg-subtle: color-mix(in srgb, var(--barbarian-secondary) 30%, white);
+  --bs-secondary-border-subtle: color-mix(in srgb, var(--barbarian-secondary) 65%, white);
+
+  --bs-success-text-emphasis: color-mix(in srgb, var(--barbarian-success) 55%, black);
+  --bs-success-bg-subtle: color-mix(in srgb, var(--barbarian-success) 30%, white);
+  --bs-success-border-subtle: color-mix(in srgb, var(--barbarian-success) 65%, white);
+
+  --bs-info-text-emphasis: color-mix(in srgb, var(--barbarian-info) 55%, black);
+  --bs-info-bg-subtle: color-mix(in srgb, var(--barbarian-info) 30%, white);
+  --bs-info-border-subtle: color-mix(in srgb, var(--barbarian-info) 65%, white);
+
+  --bs-warning-text-emphasis: color-mix(in srgb, var(--barbarian-warning) 55%, black);
+  --bs-warning-bg-subtle: color-mix(in srgb, var(--barbarian-warning) 30%, white);
+  --bs-warning-border-subtle: color-mix(in srgb, var(--barbarian-warning) 65%, white);
+
+  --bs-danger-text-emphasis: color-mix(in srgb, var(--barbarian-danger) 55%, black);
+  --bs-danger-bg-subtle: color-mix(in srgb, var(--barbarian-danger) 30%, white);
+  --bs-danger-border-subtle: color-mix(in srgb, var(--barbarian-danger) 65%, white);
 
   --bs-body-bg: var(--barbarian-surface-raised);
   --bs-body-bg-rgb: var(--barbarian-surface-raised-rgb);
   --bs-body-color: var(--barbarian-text);
   --bs-body-color-rgb: var(--barbarian-text-rgb);
-  --bs-heading-color: var(--barbarian-heading);
+  --bs-emphasis-color: color-mix(in srgb, var(--barbarian-text) 85%, black);
+  --bs-secondary-color: var(--barbarian-text-muted);
+  --bs-secondary-bg: var(--barbarian-surface);
+  --bs-tertiary-bg: var(--barbarian-sunken);
   --bs-border-color: var(--barbarian-border);
+  --bs-border-color-translucent: color-mix(in srgb, var(--barbarian-border) 30%, transparent);
+  --bs-heading-color: var(--barbarian-heading);
+  --bs-link-color: var(--barbarian-accent);
+  --bs-link-hover-color: color-mix(in srgb, var(--barbarian-accent) 70%, black);
+  --bs-code-color: var(--barbarian-danger);
+  --bs-highlight-bg: var(--barbarian-primary-light);
+  --bs-highlight-color: var(--barbarian-text);
+
   --bs-body-font-family: var(--barbarian-font-body);
+  --bs-body-font-size: 1.0625rem;
+  --bs-body-line-height: 1.65;
+
   --bs-border-radius: var(--barbarian-radius);
   --bs-border-radius-sm: var(--barbarian-radius-sm);
   --bs-border-radius-lg: var(--barbarian-radius-lg);
+  --bs-border-radius-pill: var(--barbarian-radius-pill);
+  --bs-focus-ring-color: color-mix(in srgb, var(--barbarian-ember) 60%, transparent);
+
+  --bs-form-valid-color: var(--barbarian-success);
+  --bs-form-valid-border-color: var(--barbarian-secondary);
+  --bs-form-invalid-color: var(--barbarian-danger);
+  --bs-form-invalid-border-color: var(--barbarian-danger);
+
+  color-scheme: light;
 }
 
 [data-bs-theme="dark"] {
+  --barbarian-background: #070B1C;
   --barbarian-surface: #2B2118;
   --barbarian-surface-raised: #362A1F;
   --barbarian-surface-raised-rgb: 54, 42, 31;
   --barbarian-field: #1E1812;
   --barbarian-field-focus: #251D16;
   --barbarian-sunken: #17120D;
+
   --barbarian-text: #EDE2C8;
   --barbarian-text-rgb: 237, 226, 200;
   --barbarian-text-muted: rgba(237, 226, 200, .72);
   --barbarian-heading: #E9C77F;
   --barbarian-accent: #E9B35A;
+  --barbarian-rune: #F2A24A;
+
+  --barbarian-header-bg: #15100B;
+  --barbarian-header-text: #E9C77F;
   --barbarian-border: #7A5E3A;
   --barbarian-field-border: #6E5634;
+  --barbarian-placeholder: #9C8A68;
 
+  --barbarian-stitch: color-mix(in srgb, var(--barbarian-primary) 42%, transparent);
+  --barbarian-vignette: rgba(0, 0, 0, .5);
+  --barbarian-hover: color-mix(in srgb, var(--barbarian-primary) 18%, transparent);
+  --barbarian-list-surface: rgba(20, 15, 10, .4);
+  --barbarian-panel-glow: rgba(200, 215, 245, .06);
+  --barbarian-shadow-panel: 0 20px 48px rgba(0, 0, 8, .7);
+
+  --fondo-html: var(--barbarian-background);
   --sup-panel: var(--barbarian-surface);
   --sup-card: var(--barbarian-surface-raised);
   --sup-menu: var(--barbarian-surface);
   --sup-campo: var(--barbarian-field);
   --sup-campo-foco: var(--barbarian-field-focus);
   --sup-hundida: var(--barbarian-sunken);
+  --sup-lista: var(--barbarian-list-surface);
+
   --tinta: var(--barbarian-text);
   --tinta-suave: var(--barbarian-text-muted);
   --titulo: var(--barbarian-heading);
   --acento: var(--barbarian-accent);
+  --runa-color: var(--barbarian-rune);
+
+  --cabecera-bg: var(--barbarian-header-bg);
+  --cabecera-texto: var(--barbarian-header-text);
   --borde: var(--barbarian-border);
   --borde-campo: var(--barbarian-field-border);
+  --costura-color: var(--barbarian-stitch);
+  --vineta: var(--barbarian-vignette);
+  --hover: var(--barbarian-hover);
+  --placeholder: var(--barbarian-placeholder);
+
   --tex-panel: var(--barbarian-texture-leather-dark);
+  --brillo-panel: var(--barbarian-panel-glow);
+  --sombra-panel: var(--barbarian-shadow-panel);
+
+  --hero-texto: #F2E7CC;
+  --hero-lead: #DCD3BD;
+  --hero-velo: rgba(5, 9, 24, .55);
+  --hero-sombra: 0 2px 16px rgba(5, 9, 24, .85);
+  --hero-runas: var(--barbarian-ember);
+
+  --bs-primary-text-emphasis: color-mix(in srgb, var(--barbarian-primary) 55%, white);
+  --bs-primary-bg-subtle: color-mix(in srgb, var(--barbarian-primary) 24%, black);
+  --bs-primary-border-subtle: color-mix(in srgb, var(--barbarian-primary) 55%, black);
+
+  --bs-secondary-text-emphasis: color-mix(in srgb, var(--barbarian-secondary) 60%, white);
+  --bs-secondary-bg-subtle: color-mix(in srgb, var(--barbarian-secondary) 22%, black);
+  --bs-secondary-border-subtle: color-mix(in srgb, var(--barbarian-secondary) 55%, black);
+
+  --bs-success-text-emphasis: color-mix(in srgb, var(--barbarian-success) 60%, white);
+  --bs-success-bg-subtle: color-mix(in srgb, var(--barbarian-success) 22%, black);
+  --bs-success-border-subtle: color-mix(in srgb, var(--barbarian-success) 55%, black);
+
+  --bs-info-text-emphasis: color-mix(in srgb, var(--barbarian-info) 60%, white);
+  --bs-info-bg-subtle: color-mix(in srgb, var(--barbarian-info) 22%, black);
+  --bs-info-border-subtle: color-mix(in srgb, var(--barbarian-info) 55%, black);
+
+  --bs-warning-text-emphasis: color-mix(in srgb, var(--barbarian-warning) 60%, white);
+  --bs-warning-bg-subtle: color-mix(in srgb, var(--barbarian-warning) 22%, black);
+  --bs-warning-border-subtle: color-mix(in srgb, var(--barbarian-warning) 55%, black);
+
+  --bs-danger-text-emphasis: color-mix(in srgb, var(--barbarian-danger) 60%, white);
+  --bs-danger-bg-subtle: color-mix(in srgb, var(--barbarian-danger) 22%, black);
+  --bs-danger-border-subtle: color-mix(in srgb, var(--barbarian-danger) 55%, black);
 
   --bs-body-bg: var(--barbarian-surface-raised);
   --bs-body-bg-rgb: var(--barbarian-surface-raised-rgb);
   --bs-body-color: var(--barbarian-text);
   --bs-body-color-rgb: var(--barbarian-text-rgb);
-  --bs-heading-color: var(--barbarian-heading);
+  --bs-emphasis-color: color-mix(in srgb, var(--barbarian-text) 92%, white);
+  --bs-secondary-color: var(--barbarian-text-muted);
+  --bs-secondary-bg: var(--barbarian-surface);
+  --bs-tertiary-bg: var(--barbarian-sunken);
   --bs-border-color: var(--barbarian-border);
+  --bs-border-color-translucent: color-mix(in srgb, var(--barbarian-heading) 18%, transparent);
+  --bs-heading-color: var(--barbarian-heading);
+  --bs-link-color: var(--barbarian-accent);
+  --bs-link-hover-color: color-mix(in srgb, var(--barbarian-accent) 75%, white);
+  --bs-code-color: var(--barbarian-ember);
+  --bs-highlight-bg: color-mix(in srgb, var(--barbarian-primary) 45%, black);
+  --bs-highlight-color: var(--barbarian-bone);
+
+  --bs-form-valid-color: color-mix(in srgb, var(--barbarian-success) 65%, white);
+  --bs-form-valid-border-color: var(--barbarian-secondary);
+  --bs-form-invalid-color: color-mix(in srgb, var(--barbarian-danger) 60%, white);
+  --bs-form-invalid-border-color: color-mix(in srgb, var(--barbarian-danger) 75%, white);
+
+  color-scheme: dark;
 }
