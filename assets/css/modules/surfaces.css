@@ -35,6 +35,6 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .panel-piel, .card, .form-control, .form-select, .accordion-item, .accordion-button, .list-group-item, .tab-content, .table, .page-link {
-    transition: background-color .6s ease, color .6s ease, border-color .6s ease;
+    transition: background-color .22s ease, color .22s ease, border-color .22s ease;
   }
 }
