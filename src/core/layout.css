@@ -33,8 +33,19 @@ html { scroll-padding-top: env(safe-area-inset-top, 0px); }
   }
 
   .panel-piel {
-    background: linear-gradient(180deg, var(--sup-panel), var(--sup-card));
+    /*
+     * Do not use the background shorthand here: background-image is disabled
+     * with !important above and the shorthand would reset background-color to
+     * transparent. Keep the mobile panel opaque and use only a cheap gradient.
+     */
+    background-color: var(--sup-panel);
+    background-image: linear-gradient(180deg, var(--sup-panel), var(--sup-card)) !important;
     box-shadow: 0 6px 16px rgba(20, 10, 4, .18);
+  }
+
+  /* Remove the grain texture but keep Bootstrap's native select arrow. */
+  .form-select {
+    background-image: var(--bs-form-select-bg-img) !important;
   }
 
   .card { box-shadow: 0 3px 10px rgba(20, 10, 4, .16); }

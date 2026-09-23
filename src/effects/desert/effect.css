@@ -1,4 +1,13 @@
-/* Optional full-viewport canvas used by the desert effect. */
+/* Optional full-viewport canvas used by the desert effect.
+ * This stylesheet owns the transparent page layer so the core theme does not
+ * need to know that a canvas exists.
+ */
+body {
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+}
+
 #escena {
   position: fixed;
   inset: 0;
