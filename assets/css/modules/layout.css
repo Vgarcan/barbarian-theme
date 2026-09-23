@@ -13,6 +13,74 @@ html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 /* ================= FONDO VIVO ================= */
 #escena { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
 
+@media (max-width: 767.98px) {
+  /*
+   * Modo de rendimiento móvil.
+   * Las texturas SVG usan feTurbulence y son visualmente ricas, pero caras al
+   * hacer scroll en GPU móviles. En pantallas pequeñas conservamos la paleta,
+   * bordes y jerarquía visual usando fondos simples.
+   */
+  .panel-piel,
+  .card,
+  .card-header,
+  .card-footer,
+  .navbar,
+  .pelaje,
+  .modal-header,
+  .offcanvas-header,
+  .toast-header,
+  .dropdown-menu,
+  .form-control,
+  .form-select,
+  .accordion-button,
+  .btn:not(.btn-link),
+  .table > thead th {
+    background-image: none !important;
+  }
+
+  .panel-piel {
+    background: linear-gradient(180deg, var(--sup-panel), var(--sup-card));
+    box-shadow: 0 6px 16px rgba(20,10,4,.18);
+  }
+
+  .card {
+    box-shadow: 0 3px 10px rgba(20,10,4,.16);
+  }
+
+  .btn:not(.btn-link),
+  .btn-group > .btn {
+    box-shadow: 0 2px 4px rgba(20,10,4,.18);
+  }
+
+  .btn:hover {
+    filter: none;
+  }
+
+  .form-control,
+  .form-select {
+    box-shadow: inset 0 1px 2px rgba(40,25,5,.18);
+  }
+
+  .hero h1,
+  .hero .lead,
+  [data-bs-theme="dark"] .hero .runas-hero {
+    text-shadow: none;
+  }
+
+  .card-header[data-runa]::after,
+  .card:hover .card-header[data-runa]::after {
+    text-shadow: none;
+  }
+
+  .btn,
+  .form-control,
+  .form-select,
+  .accordion-button,
+  .nav-link {
+    touch-action: manipulation;
+  }
+}
+
 @media (max-width: 575.98px) {
   .panel-piel { padding: 1.75rem 1.1rem; outline-offset: -8px; border-radius: 14px 20px 12px 22px / 18px 12px 20px 14px; }
   .card { outline-offset: -5px; }
