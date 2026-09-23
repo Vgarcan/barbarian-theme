@@ -69,6 +69,18 @@
     form.addEventListener('reset', () => form.classList.remove('was-validated'));
   });
 
+  document.querySelectorAll('[data-demo-kpi-delta]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!theme?.changeKpiValue) return;
+
+      const target = button.dataset.demoKpiTarget;
+      const delta = Number(button.dataset.demoKpiDelta);
+
+      if (!target || !Number.isFinite(delta)) return;
+      theme.changeKpiValue(target, delta);
+    });
+  });
+
   if (window.BarbarianDesert?.initDesertEffect) {
     window.BarbarianDesert.initDesertEffect();
   }

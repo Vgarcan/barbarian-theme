@@ -104,6 +104,7 @@
     <aside class="col-lg-3 d-none d-lg-block">
       <nav id="indice" class="indice panel-piel sticky-top nav flex-column" aria-label="Secciones">
         <a class="nav-link" href="#panteon" data-runa="ᛟ">Panteón</a>
+        <a class="nav-link" href="#ficha" data-runa="ᛉ">Ficha / KPIs</a>
         <a class="nav-link" href="#runas" data-runa="ᚨ">Tipografía y runas</a>
         <a class="nav-link" href="#botones" data-runa="ᛏ">Botones</a>
         <a class="nav-link" href="#juramento" data-runa="ᚷ">Formularios</a>
@@ -172,6 +173,143 @@
         </div>
       </div>
     </div></div>
+  </div>
+</section>
+
+<!-- ============ FICHA / KPIs ============ -->
+<section id="ficha" class="panel-piel">
+  <h2 data-runa-titulo="ᛉ">Ficha de guerrero · KPIs</h2>
+  <p class="mb-4">Componentes reutilizables para fichas RPG, dashboards y paneles de estado. El CSS define la presentación; la API JavaScript sincroniza valor, progreso y accesibilidad.</p>
+
+  <div class="barbarian-character-sheet">
+    <header class="barbarian-character-sheet__header">
+      <div class="barbarian-character-sheet__identity">
+        <h3 class="barbarian-character-sheet__name">Kael Rompehuesos</h3>
+        <p class="barbarian-character-sheet__meta">Bárbaro · Clan de la Serpiente · Mandoble a dos manos</p>
+      </div>
+      <div class="barbarian-character-sheet__level">
+        <small>Nivel</small>
+        <strong>27</strong>
+      </div>
+    </header>
+
+    <div class="barbarian-kpi-grid">
+      <article id="kpiVida" class="barbarian-kpi barbarian-kpi--resource"
+        data-barbarian-kpi data-kpi-value="86" data-kpi-max="120" data-kpi-tone="danger"
+        aria-label="Vida">
+        <div class="barbarian-kpi__topline">
+          <span class="barbarian-kpi__label">Vida</span>
+          <span class="barbarian-kpi__rune" aria-hidden="true">ᛉ</span>
+        </div>
+        <strong class="barbarian-kpi__value">
+          <span data-kpi-current>86</span><small>/<span data-kpi-max-display>120</span> HP</small>
+        </strong>
+        <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+        <div class="barbarian-kpi__meta">Resistencia restante</div>
+      </article>
+
+      <article id="kpiAguante" class="barbarian-kpi barbarian-kpi--resource"
+        data-barbarian-kpi data-kpi-value="54" data-kpi-max="80" data-kpi-tone="success"
+        aria-label="Aguante">
+        <div class="barbarian-kpi__topline">
+          <span class="barbarian-kpi__label">Aguante</span>
+          <span class="barbarian-kpi__rune" aria-hidden="true">ᚢ</span>
+        </div>
+        <strong class="barbarian-kpi__value">
+          <span data-kpi-current>54</span><small>/<span data-kpi-max-display>80</span></small>
+        </strong>
+        <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+        <div class="barbarian-kpi__meta">Carrera, esquiva y ataques pesados</div>
+      </article>
+
+      <article id="kpiFuria" class="barbarian-kpi barbarian-kpi--resource"
+        data-barbarian-kpi data-kpi-value="38" data-kpi-max="100" data-kpi-tone="warning"
+        aria-label="Furia">
+        <div class="barbarian-kpi__topline">
+          <span class="barbarian-kpi__label">Furia</span>
+          <span class="barbarian-kpi__rune" aria-hidden="true">ᚦ</span>
+        </div>
+        <strong class="barbarian-kpi__value">
+          <span data-kpi-current>38</span><small>/<span data-kpi-max-display>100</span></small>
+        </strong>
+        <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+        <div class="barbarian-kpi__meta">Carga para entrar en frenesí</div>
+      </article>
+
+      <article class="barbarian-kpi"
+        data-barbarian-kpi data-kpi-value="1240" data-kpi-max="2000" data-kpi-tone="primary"
+        aria-label="Oro">
+        <div class="barbarian-kpi__topline">
+          <span class="barbarian-kpi__label">Oro</span>
+          <span class="barbarian-kpi__rune" aria-hidden="true">ᚠ</span>
+        </div>
+        <strong class="barbarian-kpi__value" data-kpi-display>1.240</strong>
+        <span class="barbarian-kpi__delta" data-kpi-delta="145">+145</span>
+        <div class="barbarian-kpi__meta">Desde la última expedición</div>
+      </article>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <h3 class="h5 mb-3">Atributos</h3>
+        <div class="barbarian-stat-list">
+          <div class="barbarian-kpi barbarian-kpi--attribute"
+            data-barbarian-kpi data-kpi-value="18" data-kpi-max="20" data-kpi-tone="danger" aria-label="Fuerza">
+            <span class="barbarian-kpi__label">Fuerza</span>
+            <strong class="barbarian-kpi__value" data-kpi-display>18</strong>
+            <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+          </div>
+          <div class="barbarian-kpi barbarian-kpi--attribute"
+            data-barbarian-kpi data-kpi-value="14" data-kpi-max="20" data-kpi-tone="info" aria-label="Destreza">
+            <span class="barbarian-kpi__label">Destreza</span>
+            <strong class="barbarian-kpi__value" data-kpi-display>14</strong>
+            <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+          </div>
+          <div class="barbarian-kpi barbarian-kpi--attribute"
+            data-barbarian-kpi data-kpi-value="17" data-kpi-max="20" data-kpi-tone="success" aria-label="Constitución">
+            <span class="barbarian-kpi__label">Constitución</span>
+            <strong class="barbarian-kpi__value" data-kpi-display>17</strong>
+            <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+          </div>
+          <div class="barbarian-kpi barbarian-kpi--attribute"
+            data-barbarian-kpi data-kpi-value="9" data-kpi-max="20" data-kpi-tone="secondary" aria-label="Sabiduría">
+            <span class="barbarian-kpi__label">Sabiduría</span>
+            <strong class="barbarian-kpi__value" data-kpi-display>9</strong>
+            <div class="barbarian-kpi__meter" aria-hidden="true"><span class="barbarian-kpi__meter-fill"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <h3 class="h5 mb-3">Combate</h3>
+        <div class="barbarian-kpi-grid">
+          <article class="barbarian-kpi barbarian-kpi--radial"
+            data-barbarian-kpi data-kpi-value="18" data-kpi-max="100" data-kpi-format="percent"
+            data-kpi-tone="danger" aria-label="Probabilidad de crítico">
+            <div class="barbarian-kpi__ring">
+              <strong class="barbarian-kpi__value" data-kpi-display>18%</strong>
+            </div>
+            <span class="barbarian-kpi__label mt-2">Crítico</span>
+          </article>
+
+          <article class="barbarian-kpi barbarian-kpi--radial"
+            data-barbarian-kpi data-kpi-value="64" data-kpi-max="100"
+            data-kpi-tone="secondary" aria-label="Armadura">
+            <div class="barbarian-kpi__ring">
+              <strong class="barbarian-kpi__value" data-kpi-display>64</strong>
+            </div>
+            <span class="barbarian-kpi__label mt-2">Armadura</span>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 pt-2">
+      <button class="btn btn-sm btn-danger" type="button" data-demo-kpi-target="#kpiVida" data-demo-kpi-delta="-15">Recibir 15 de daño</button>
+      <button class="btn btn-sm btn-success" type="button" data-demo-kpi-target="#kpiVida" data-demo-kpi-delta="15">Curar 15</button>
+      <button class="btn btn-sm btn-secondary" type="button" data-demo-kpi-target="#kpiAguante" data-demo-kpi-delta="-10">Gastar 10 de aguante</button>
+      <button class="btn btn-sm btn-primary" type="button" data-demo-kpi-target="#kpiAguante" data-demo-kpi-delta="10">Recuperar 10</button>
+    </div>
   </div>
 </section>
 

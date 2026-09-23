@@ -1,3 +1,17 @@
+import {
+  changeKpiValue,
+  initKpis,
+  refreshKpi,
+  setKpiValue
+} from './components/kpis.js';
+
+export {
+  changeKpiValue,
+  initKpis,
+  refreshKpi,
+  setKpiValue
+};
+
 const COLOR_MODE_KEY = 'barbarian-color-mode';
 const LEGACY_COLOR_MODE_KEY = 'tema-barbaro';
 const VARIANT_KEY = 'barbarian-variant';
@@ -102,11 +116,13 @@ export function bindControls(scope = document) {
 export function init({
   colorMode = getStoredColorMode() || 'auto',
   variant = getStoredVariant() || 'desert',
-  controls = true
+  controls = true,
+  kpis = true
 } = {}) {
   setColorMode(colorMode, { persist: false });
   setVariant(variant, { persist: false });
   if (controls) bindControls();
+  if (kpis) initKpis();
   return { colorMode, variant };
 }
 

@@ -24,5 +24,6 @@
 @import url('./components/collections.css');
 @import url('./components/overlays.css');
 @import url('./components/feedback.css');
+@import url('./components/kpis.css');
 
 @import url('./core/layout.css');
