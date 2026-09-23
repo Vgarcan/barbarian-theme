@@ -31,8 +31,11 @@ var BarbarianTheme = (() => {
     variants: () => variants
   });
   var COLOR_MODE_KEY = "barbarian-color-mode";
+  var LEGACY_COLOR_MODE_KEY = "tema-barbaro";
   var VARIANT_KEY = "barbarian-variant";
   var VALID_COLOR_MODES = /* @__PURE__ */ new Set(["light", "dark", "auto"]);
+  var systemColorMode = matchMedia("(prefers-color-scheme: dark)");
+  var activeColorMode = "auto";
   var variants = Object.freeze([
     "desert",
     "nordic",
@@ -44,11 +47,11 @@ var BarbarianTheme = (() => {
     return document.documentElement;
   }
   function getSystemColorMode() {
-    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return systemColorMode.matches ? "dark" : "light";
   }
   function getStoredColorMode() {
     try {
-      return localStorage.getItem(COLOR_MODE_KEY);
+      return localStorage.getItem(COLOR_MODE_KEY) || localStorage.getItem(LEGACY_COLOR_MODE_KEY);
     } catch {
       return null;
     }
@@ -63,10 +66,12 @@ var BarbarianTheme = (() => {
   function setColorMode(mode = "auto", { persist = true } = {}) {
     const requested = VALID_COLOR_MODES.has(mode) ? mode : "auto";
     const resolved = requested === "auto" ? getSystemColorMode() : requested;
+    activeColorMode = requested;
     getRoot().setAttribute("data-bs-theme", resolved);
     if (persist) {
       try {
         localStorage.setItem(COLOR_MODE_KEY, requested);
+        localStorage.removeItem(LEGACY_COLOR_MODE_KEY);
       } catch {
       }
     }
@@ -96,9 +101,13 @@ var BarbarianTheme = (() => {
   }
   function bindControls(scope = document) {
     scope.querySelectorAll("[data-barbarian-color-toggle]").forEach((button) => {
+      if (button.dataset.barbarianBound === "true") return;
+      button.dataset.barbarianBound = "true";
       button.addEventListener("click", () => toggleColorMode());
     });
     scope.querySelectorAll("[data-barbarian-set-variant]").forEach((control) => {
+      if (control.dataset.barbarianBound === "true") return;
+      control.dataset.barbarianBound = "true";
       control.addEventListener("click", () => {
         setVariant(control.getAttribute("data-barbarian-set-variant"));
       });
@@ -114,5 +123,10 @@ var BarbarianTheme = (() => {
     if (controls) bindControls();
     return { colorMode, variant };
   }
+  systemColorMode.addEventListener?.("change", () => {
+    if (activeColorMode === "auto") {
+      setColorMode("auto", { persist: false });
+    }
+  });
   return __toCommonJS(barbarian_theme_exports);
 })();

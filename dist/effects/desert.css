@@ -1,4 +1,9 @@
 /* src/effects/desert/effect.css */
+body {
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+}
 #escena {
   position: fixed;
   inset: 0;

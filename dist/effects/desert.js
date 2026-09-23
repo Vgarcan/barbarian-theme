@@ -27,8 +27,10 @@ var BarbarianDesert = (() => {
   // src/effects/desert/desert-scene.js
   function initDesertScene() {
     const cv = document.getElementById("escena");
-    if (!cv || !cv.getContext) return;
+    if (!cv || !cv.getContext || cv.dataset.barbarianDesertInitialized === "true") return;
     const ctx = cv.getContext("2d");
+    if (!ctx) return;
+    cv.dataset.barbarianDesertInitialized = "true";
     const btnViento = document.getElementById("toggleViento");
     const menosMovimiento = matchMedia("(prefers-reduced-motion: reduce)");
     const RUNAS = "ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ";
@@ -693,6 +695,7 @@ var BarbarianDesert = (() => {
       return suave(mezclaLin);
     }
     function marcarInteraccion(duracion = 320) {
+      if (!activo) return;
       interaccionHasta = Math.max(interaccionHasta, performance.now() + duracion);
     }
     function bucle(ahora) {
@@ -735,7 +738,8 @@ var BarbarianDesert = (() => {
       activo = v;
       if (btnViento) {
         btnViento.setAttribute("aria-pressed", String(v));
-        btnViento.querySelector("span").textContent = v ? "Pausar viento" : "Activar viento";
+        const label = btnViento.querySelector("span");
+        if (label) label.textContent = v ? "Pausar viento" : "Activar viento";
       }
       v ? arrancar() : (parar(), fotoEstatica());
     }
@@ -758,6 +762,9 @@ var BarbarianDesert = (() => {
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) parar();
       else if (activo) arrancar();
+    });
+    menosMovimiento.addEventListener?.("change", (event) => {
+      if (event.matches && activo) ponerViento(false);
     });
     if (btnViento) btnViento.addEventListener("click", () => ponerViento(!activo));
     document.addEventListener("pointerdown", () => marcarInteraccion(), { passive: true });

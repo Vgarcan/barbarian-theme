@@ -665,7 +665,8 @@ html {
   background: var(--fondo-html);
 }
 body {
-  background: transparent;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
 }
 h1,
 h2,
@@ -1707,12 +1708,16 @@ html {
     background-image: none !important;
   }
   .panel-piel {
-    background:
+    background-color: var(--sup-panel);
+    background-image:
       linear-gradient(
         180deg,
         var(--sup-panel),
-        var(--sup-card));
+        var(--sup-card)) !important;
     box-shadow: 0 6px 16px rgba(20, 10, 4, .18);
+  }
+  .form-select {
+    background-image: var(--bs-form-select-bg-img) !important;
   }
   .card {
     box-shadow: 0 3px 10px rgba(20, 10, 4, .16);
