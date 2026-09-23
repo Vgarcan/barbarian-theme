@@ -12,6 +12,15 @@
 .contenido { padding-bottom: 4rem; }
 .contenido section { scroll-margin-top: 6rem; }
 .contenido section + section { margin-top: 2.75rem; }
+
+/*
+ * La demo es una página muy larga. `content-visibility` evita pintar las
+ * secciones fuera del viewport y conserva una altura aproximada para el scroll.
+ */
+.contenido main > section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 780px;
+}
 .contenido section > h2 { margin-bottom: 1.25rem; }
 .indice.panel-piel { position: sticky; top: 6.5rem; padding: 1.5rem 1.25rem; }
 .indice .nav-link { display: flex; align-items: center; gap: .65rem; padding: .28rem .4rem; color: var(--tinta); border-radius: .2rem; }
