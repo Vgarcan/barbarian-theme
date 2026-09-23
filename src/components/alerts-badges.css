@@ -1,0 +1,18 @@
+/* Alertas y badges. */
+/* ================= ALERTAS (presagios con runa) ================= */
+.alert { position: relative; padding-left: 3.4rem; border-width: 0 0 0 7px; background-image: var(--tex-panel); box-shadow: inset 0 0 14px rgba(0,0,0,.15); }
+.alert::before { position: absolute; left: 1.05rem; top: .95rem; font-family: var(--fuente-runas); font-size: 1.45rem; line-height: 1; color: var(--bs-alert-color); opacity: .85; }
+.alert-primary::before   { content: "ᛊ"; content: "ᛊ" / ""; }  /* sowilo · sol */
+.alert-secondary::before { content: "ᚱ"; content: "ᚱ" / ""; }  /* raido · viaje */
+.alert-success::before   { content: "ᛉ"; content: "ᛉ" / ""; }  /* algiz · protección */
+.alert-info::before      { content: "ᚨ"; content: "ᚨ" / ""; }  /* ansuz · mensaje */
+.alert-warning::before   { content: "ᚦ"; content: "ᚦ" / ""; }  /* thurisaz · peligro */
+.alert-danger::before    { content: "ᛏ"; content: "ᛏ" / ""; }  /* tiwaz · guerra */
+.alert-light::before, .alert-dark::before { content: "ᛟ"; content: "ᛟ" / ""; }
+.alert-heading { font-family: var(--fuente-titulo); color: inherit; }
+
+/* ================= BADGES ================= */
+.badge { font-family: var(--fuente-titulo); font-weight: 400; letter-spacing: .02em; border-radius: .15rem; box-shadow: inset 0 -2px 0 rgba(0,0,0,.25); }
+.text-bg-primary { color: #2B1D06 !important; }
+.text-bg-secondary { color: #1F1F0C !important; }
+[data-bs-theme="dark"] .text-bg-dark { box-shadow: inset 0 0 0 1px rgba(233,199,127,.35); }

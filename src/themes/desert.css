@@ -1,0 +1,12 @@
+/* Desert is the default palette. Explicit selector allows runtime switching back. */
+[data-barbarian-variant="desert"] {
+  --barbarian-primary: #D6A13C;
+  --barbarian-primary-rgb: 214, 161, 60;
+  --barbarian-secondary: #8E8C4E;
+  --barbarian-secondary-rgb: 142, 140, 78;
+  --barbarian-leather: #8B5A33;
+  --barbarian-leather-dark: #4A2C18;
+  --barbarian-fur: #3A2B1F;
+  --barbarian-ember: #F2A24A;
+  --barbarian-accent: #7C2A1A;
+}

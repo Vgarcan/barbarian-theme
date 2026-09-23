@@ -1,0 +1,24 @@
+/* Sistema visual de runas y animaciones asociadas. */
+/* ================= RUNAS ================= */
+.runa { font-family: var(--fuente-runas); font-style: normal; line-height: 1; }
+.runa-brasa { font-family: var(--fuente-runas); color: var(--brasa); text-shadow: 0 0 10px rgba(242,162,74,.8), 0 0 2px #7a3a10; }
+.separador-runico {
+  display: flex; align-items: center; gap: 1rem; margin: 1.75rem 0;
+  font-family: var(--fuente-runas); color: var(--borde); letter-spacing: .45em; font-size: 1.05rem;
+}
+.separador-runico::before, .separador-runico::after { content: ""; flex: 1; height: 2px; background: linear-gradient(90deg, transparent, currentColor); }
+.separador-runico::after { background: linear-gradient(90deg, currentColor, transparent); }
+.lista-runas { list-style: none; padding-left: 0; }
+.lista-runas li { position: relative; padding-left: 1.9rem; margin-bottom: .35rem; }
+.lista-runas li::before { content: attr(data-runa); content: attr(data-runa) / ""; position: absolute; left: .2rem; top: .15em; font-family: var(--fuente-runas); color: var(--runa-color); }
+[data-runa-titulo]::before { content: attr(data-runa-titulo); content: attr(data-runa-titulo) / ""; font-family: var(--fuente-runas); color: var(--runa-color); margin-right: .6rem; font-size: .8em; vertical-align: .1em; }
+[data-bs-theme="dark"] [data-runa-titulo]::before { text-shadow: 0 0 10px rgba(242,162,74,.6); }
+
+.spinner-runas { position: relative; display: inline-block; width: 3.4rem; height: 3.4rem; font-family: var(--fuente-runas); color: var(--brasa); font-size: 1rem; animation: runas-girar 7s linear infinite; }
+.spinner-runas > span[aria-hidden] {
+  position: absolute; left: 50%; top: 50%; width: 1em; height: 1em; margin: -.5em 0 0 -.5em; text-align: center; line-height: 1;
+  transform: rotate(calc(var(--i) * 45deg)) translateY(-1.35rem);
+  animation: runas-latir 1.6s ease-in-out infinite; animation-delay: calc(var(--i) * .2s);
+}
+@keyframes runas-girar { to { transform: rotate(360deg); } }
+@keyframes runas-latir { 0%,100% { opacity: .3; text-shadow: none; } 50% { opacity: 1; text-shadow: 0 0 8px var(--brasa); } }

@@ -1,0 +1,19 @@
+{
+  "name": "@vgarcan/barbarian-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A configurable barbarian visual theme for Bootstrap 5.3.",
+  "style": "dist/barbarian-theme.min.css",
+  "main": "dist/barbarian-theme.min.js",
+  "files": [
+    "dist",
+    "src/themes"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:check": "npm run build && git diff --exit-code -- dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

@@ -1,0 +1,19 @@
+/* Tabs, pills, breadcrumb y paginación. */
+/* ================= NAVS / BREADCRUMB / PAGINACIÓN ================= */
+.nav-tabs { --bs-nav-tabs-border-color: var(--borde); --bs-nav-tabs-border-width: 2px; --bs-nav-tabs-link-active-bg: var(--sup-card); --bs-nav-tabs-link-active-color: var(--titulo); --bs-nav-tabs-link-active-border-color: var(--borde) var(--borde) var(--sup-card); --bs-nav-tabs-link-hover-border-color: var(--costura-color); }
+.nav-tabs .nav-link, .nav-pills .nav-link { font-family: var(--fuente-titulo); color: var(--acento); }
+.nav-tabs .nav-link.active { color: var(--titulo); }
+.nav-pills { --bs-nav-pills-link-active-bg: var(--cabecera-bg); --bs-nav-pills-link-active-color: var(--cabecera-texto); }
+.nav-pills .nav-link.active { color: var(--cabecera-texto); }
+.nav-link.disabled { color: var(--tinta-suave) !important; opacity: .6; }
+.tab-content { background: var(--sup-card); background-image: var(--tex-panel); border: 2px solid var(--borde); border-top: 0; padding: 1rem 1.2rem; }
+.breadcrumb { --bs-breadcrumb-divider-color: var(--borde); --bs-breadcrumb-item-active-color: var(--tinta); font-style: italic; }
+.breadcrumb-item + .breadcrumb-item::before { content: "᛫"; font-family: var(--fuente-runas); font-style: normal; font-size: 1.3em; line-height: 1; }
+.pagination {
+  --bs-pagination-bg: var(--sup-card); --bs-pagination-color: var(--acento); --bs-pagination-border-color: var(--borde); --bs-pagination-border-width: 2px;
+  --bs-pagination-hover-bg: var(--hover); --bs-pagination-hover-color: var(--titulo); --bs-pagination-hover-border-color: var(--borde);
+  --bs-pagination-active-bg: var(--cabecera-bg); --bs-pagination-active-color: var(--cabecera-texto); --bs-pagination-active-border-color: var(--cabecera-bg);
+  --bs-pagination-disabled-bg: var(--sup-hundida); --bs-pagination-disabled-color: var(--tinta-suave); --bs-pagination-disabled-border-color: var(--borde);
+  --bs-pagination-focus-box-shadow: var(--anillo-brasa);
+  font-family: var(--fuente-titulo);
+}

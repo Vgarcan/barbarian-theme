@@ -1,0 +1,91 @@
+/* Core layout and mobile paint-cost controls. */
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+.navbar.sticky-top { top: env(safe-area-inset-top, 0px); }
+.toast-container { padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px)) !important; }
+
+@media (max-width: 767.98px) {
+  /*
+   * SVG turbulence looks excellent on desktop but can be expensive while
+   * scrolling on mobile GPUs. Keep the skin, simplify the paint pipeline.
+   */
+  .panel-piel,
+  .card,
+  .card-header,
+  .card-footer,
+  .navbar,
+  .pelaje,
+  .modal-header,
+  .offcanvas-header,
+  .toast-header,
+  .dropdown-menu,
+  .form-control,
+  .form-select,
+  .accordion-button,
+  .btn:not(.btn-link),
+  .table > thead th {
+    background-image: none !important;
+  }
+
+  .panel-piel {
+    background: linear-gradient(180deg, var(--sup-panel), var(--sup-card));
+    box-shadow: 0 6px 16px rgba(20, 10, 4, .18);
+  }
+
+  .card { box-shadow: 0 3px 10px rgba(20, 10, 4, .16); }
+
+  .btn:not(.btn-link),
+  .btn-group > .btn {
+    box-shadow: 0 2px 4px rgba(20, 10, 4, .18);
+  }
+
+  .btn:hover { filter: none; }
+
+  .form-control,
+  .form-select {
+    box-shadow: inset 0 1px 2px rgba(40, 25, 5, .18);
+  }
+
+  .card-header[data-runa]::after,
+  .card:hover .card-header[data-runa]::after {
+    text-shadow: none;
+  }
+
+  .btn,
+  .form-control,
+  .form-select,
+  .accordion-button,
+  .nav-link {
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .panel-piel {
+    padding: 1.75rem 1.1rem;
+    outline-offset: -8px;
+    border-radius: 14px 20px 12px 22px / 18px 12px 20px 14px;
+  }
+
+  .card { outline-offset: -5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .card-header[data-runa]::after {
+    transition: none;
+  }
+
+  .spinner-runas,
+  .spinner-runas > span[aria-hidden] {
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+  }
+
+  .spinner-runas > span[aria-hidden] { opacity: .85; }
+}

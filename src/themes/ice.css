@@ -1,0 +1,40 @@
+[data-barbarian-variant="ice"] {
+  --barbarian-primary: #76B7D2;
+  --barbarian-primary-rgb: 118, 183, 210;
+  --barbarian-primary-light: #CBE8F2;
+  --barbarian-primary-dark: #467E98;
+  --barbarian-secondary: #8DA5AA;
+  --barbarian-secondary-rgb: 141, 165, 170;
+  --barbarian-info: #5C9FBF;
+  --barbarian-info-rgb: 92, 159, 191;
+  --barbarian-leather: #70808A;
+  --barbarian-leather-dark: #3D4A52;
+  --barbarian-fur: #25323A;
+  --barbarian-ember: #BCEBFF;
+  --barbarian-surface: #DCE9EA;
+  --barbarian-surface-raised: #F0F7F7;
+  --barbarian-surface-raised-rgb: 240, 247, 247;
+  --barbarian-field: #F7FBFB;
+  --barbarian-field-focus: #FFFFFF;
+  --barbarian-sunken: #C1D5D8;
+  --barbarian-text: #203036;
+  --barbarian-text-rgb: 32, 48, 54;
+  --barbarian-heading: #355D6D;
+  --barbarian-accent: #3D829E;
+  --barbarian-border: #7398A5;
+}
+
+[data-barbarian-variant="ice"][data-bs-theme="dark"],
+[data-bs-theme="dark"] [data-barbarian-variant="ice"] {
+  --barbarian-surface: #19262D;
+  --barbarian-surface-raised: #22343D;
+  --barbarian-surface-raised-rgb: 34, 52, 61;
+  --barbarian-field: #121D22;
+  --barbarian-field-focus: #19272E;
+  --barbarian-sunken: #0B1317;
+  --barbarian-text: #E5F3F5;
+  --barbarian-text-rgb: 229, 243, 245;
+  --barbarian-heading: #CBE8F2;
+  --barbarian-accent: #76B7D2;
+  --barbarian-border: #507887;
+}
