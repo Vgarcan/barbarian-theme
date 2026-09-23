@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://vgarcan.github.io/barbarian-theme/">
-    <img src="assets/img/readme/barbarian-theme-screenshot.jpg" alt="Barbarian Theme live preview" width="100%">
+    <img src="assets/img/readme/barbarian-theme-screenshot.webp" alt="Barbarian Theme live preview" width="100%">
   </a>
 </p>
 
