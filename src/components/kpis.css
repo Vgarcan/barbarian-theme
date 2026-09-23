@@ -1,0 +1,312 @@
+/**
+ * Barbarian KPI / Character Sheet
+ *
+ * Reusable status components for RPG sheets and application dashboards.
+ * JavaScript is optional for static markup; data attributes enable the API.
+ */
+
+.barbarian-character-sheet {
+  --barbarian-kpi-gap: 1rem;
+  display: grid;
+  gap: var(--barbarian-kpi-gap);
+}
+
+.barbarian-character-sheet__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--borde);
+}
+
+.barbarian-character-sheet__identity {
+  min-width: 0;
+}
+
+.barbarian-character-sheet__name {
+  margin: 0;
+  color: var(--titulo);
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.75rem, 5vw, 2.65rem);
+}
+
+.barbarian-character-sheet__meta {
+  margin: .25rem 0 0;
+  color: var(--tinta-suave);
+}
+
+.barbarian-character-sheet__level {
+  min-width: 5.5rem;
+  text-align: center;
+  padding: .7rem .9rem;
+  background: var(--cabecera-bg);
+  color: var(--cabecera-texto);
+  border: 2px solid var(--borde);
+  border-radius: var(--barbarian-radius-lg);
+  box-shadow: var(--sombra-tallada);
+}
+
+.barbarian-character-sheet__level small {
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+
+.barbarian-character-sheet__level strong {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.barbarian-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: var(--barbarian-kpi-gap, 1rem);
+}
+
+.barbarian-kpi {
+  --barbarian-kpi-color: var(--barbarian-primary);
+  --barbarian-kpi-progress: 0%;
+  position: relative;
+  min-width: 0;
+  padding: 1rem 1.05rem;
+  overflow: hidden;
+  background-color: var(--sup-card);
+  background-image: var(--tex-panel);
+  border: 2px solid var(--costura-color);
+  border-radius: var(--barbarian-radius-lg);
+  box-shadow: inset 0 0 18px var(--vineta), 0 4px 10px rgba(20, 10, 4, .18);
+}
+
+.barbarian-kpi::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--barbarian-kpi-color);
+  opacity: .75;
+}
+
+.barbarian-kpi[data-kpi-tone="primary"]   { --barbarian-kpi-color: var(--barbarian-primary); }
+.barbarian-kpi[data-kpi-tone="secondary"] { --barbarian-kpi-color: var(--barbarian-secondary); }
+.barbarian-kpi[data-kpi-tone="success"]   { --barbarian-kpi-color: var(--barbarian-success); }
+.barbarian-kpi[data-kpi-tone="info"]      { --barbarian-kpi-color: var(--barbarian-info); }
+.barbarian-kpi[data-kpi-tone="warning"]   { --barbarian-kpi-color: var(--barbarian-warning); }
+.barbarian-kpi[data-kpi-tone="danger"]    { --barbarian-kpi-color: var(--barbarian-danger); }
+
+.barbarian-kpi__topline {
+  display: flex;
+  gap: .75rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.barbarian-kpi__label {
+  display: block;
+  color: var(--tinta-suave);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.barbarian-kpi__rune {
+  flex: 0 0 auto;
+  font-family: var(--fuente-runas);
+  color: var(--barbarian-kpi-color);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.barbarian-kpi__value {
+  display: block;
+  margin-top: .35rem;
+  color: var(--titulo);
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.8rem, 7vw, 2.8rem);
+  line-height: .95;
+  font-variant-numeric: tabular-nums;
+}
+
+.barbarian-kpi__value small {
+  margin-left: .2em;
+  color: var(--tinta-suave);
+  font-family: var(--bs-body-font-family);
+  font-size: .42em;
+  font-weight: 600;
+}
+
+.barbarian-kpi__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  margin-top: .45rem;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.barbarian-kpi__delta[data-kpi-direction="up"] {
+  color: var(--barbarian-success);
+}
+
+.barbarian-kpi__delta[data-kpi-direction="down"] {
+  color: var(--barbarian-danger);
+}
+
+.barbarian-kpi__delta[data-kpi-direction="flat"] {
+  color: var(--tinta-suave);
+}
+
+.barbarian-kpi__meta {
+  margin-top: .4rem;
+  color: var(--tinta-suave);
+  font-size: .82rem;
+}
+
+.barbarian-kpi__meter {
+  position: relative;
+  height: .72rem;
+  margin-top: .8rem;
+  overflow: hidden;
+  background: var(--sup-hundida);
+  border: 1px solid var(--costura-color);
+  border-radius: var(--barbarian-radius-sm);
+  box-shadow: var(--sombra-hundida);
+}
+
+.barbarian-kpi__meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--barbarian-kpi-progress);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.2), rgba(0,0,0,.14)),
+    var(--barbarian-kpi-color);
+  transition: width .24s ease;
+}
+
+.barbarian-kpi--resource .barbarian-kpi__value {
+  font-size: clamp(1.65rem, 6vw, 2.35rem);
+}
+
+.barbarian-kpi--attribute {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "label value"
+    "meter meter";
+  gap: .45rem .8rem;
+  align-items: center;
+}
+
+.barbarian-kpi--attribute .barbarian-kpi__label {
+  grid-area: label;
+  color: var(--titulo);
+  font-family: var(--fuente-titulo);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.barbarian-kpi--attribute .barbarian-kpi__value {
+  grid-area: value;
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.barbarian-kpi--attribute .barbarian-kpi__meter {
+  grid-area: meter;
+  margin-top: 0;
+}
+
+.barbarian-kpi--radial {
+  display: grid;
+  place-items: center;
+  min-height: 10rem;
+  text-align: center;
+}
+
+.barbarian-kpi__ring {
+  --barbarian-kpi-ring-size: 7.25rem;
+  display: grid;
+  place-items: center;
+  width: var(--barbarian-kpi-ring-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--sup-card) 0 55%, transparent 56%),
+    conic-gradient(
+      var(--barbarian-kpi-color) var(--barbarian-kpi-progress),
+      var(--sup-hundida) 0
+    );
+  box-shadow:
+    inset 0 0 0 2px var(--costura-color),
+    0 5px 12px rgba(20, 10, 4, .2);
+}
+
+.barbarian-kpi__ring .barbarian-kpi__value {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.barbarian-stat-list {
+  display: grid;
+  gap: .7rem;
+}
+
+.barbarian-stat-row {
+  display: grid;
+  grid-template-columns: minmax(7rem, .8fr) 2fr auto;
+  gap: .8rem;
+  align-items: center;
+}
+
+.barbarian-stat-row__label {
+  color: var(--titulo);
+  font-family: var(--fuente-titulo);
+}
+
+.barbarian-stat-row__value {
+  min-width: 2.5rem;
+  text-align: right;
+  color: var(--titulo);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767.98px) {
+  .barbarian-kpi {
+    background-image: none;
+    box-shadow: 0 3px 8px rgba(20, 10, 4, .14);
+  }
+
+  .barbarian-kpi__meter-fill {
+    transition-duration: .16s;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .barbarian-character-sheet__header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .barbarian-character-sheet__level {
+    width: max-content;
+    min-width: 5rem;
+  }
+
+  .barbarian-stat-row {
+    grid-template-columns: minmax(6.5rem, .9fr) 1.7fr auto;
+    gap: .55rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barbarian-kpi__meter-fill {
+    transition: none;
+  }
+}
