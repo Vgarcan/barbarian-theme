@@ -26,6 +26,7 @@ export function initDesertScene() {
     const bajaPotencia = movil || pocosHilos;
 
     return {
+      movil,
       fps: bajaPotencia ? 24 : 30,
       fpsInteraccion: 15,
       dprMax: movil ? 1 : (pocosHilos ? 1.1 : 1.25),
@@ -79,8 +80,12 @@ export function initDesertScene() {
   let W = 0, H = 0, DPR = 1, esc = 1, horizonte = 0;
   let fondoDia = null, fondoNoche = null, circuloX = 0, piedras = [], brillos = [], totem = null;
   let matas = [], arena = [], rodadores = [], polvo = [], titilan = [], buitres = [], fugaces = [], constelaciones = [];
-  let activo = !menosMovimiento.matches, raf = 0, t = 0, prev = 0, ultimoPintado = 0;
+  // En móvil el fondo arranca estático: la interacción de la página tiene prioridad.
+  let activo = !menosMovimiento.matches && !rendimiento.movil;
+  let raf = 0, t = 0, prev = 0, ultimoPintado = 0;
   let interaccionHasta = 0;
+  let ultimoAnchoConstruido = 0;
+  let ultimoAltoConstruido = 0;
   let rafaga = 0, rafagaObj = 0, proxRafaga = 3, proxRodador = 4, proxFugaz = 3;
   const temaInicial = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 1 : 0;
   let mezclaLin = temaInicial, mezclaObj = temaInicial;
@@ -301,6 +306,8 @@ export function initDesertScene() {
     DPR = Math.min(window.devicePixelRatio || 1, rendimiento.dprMax);
     W = innerWidth; H = innerHeight; esc = Math.max(.6, Math.min(1.4, H / 900));
     cv.width = W * DPR; cv.height = H * DPR;
+    ultimoAnchoConstruido = W;
+    ultimoAltoConstruido = H;
     geometria();
     fondoDia = escenario(DIA, false);
     fondoNoche = escenario(NOCHE, true);
@@ -537,7 +544,24 @@ export function initDesertScene() {
     if (!activo) fotoEstatica();
   });
   let espera;
-  addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(() => { construir(); if (!activo) fotoEstatica(); }, 150); });
+  addEventListener('resize', () => {
+    clearTimeout(espera);
+    espera = setTimeout(() => {
+      const cambioAncho = Math.abs(innerWidth - ultimoAnchoConstruido) > 8;
+      const cambioAlto = Math.abs(innerHeight - ultimoAltoConstruido) > 80;
+
+      /*
+       * En móvil la barra del navegador cambia la altura del viewport durante
+       * el scroll. Reconstruir ambos canvas por ese cambio provoca tirones.
+       * Solo reconstruimos si cambia el ancho (rotación/cambio real de layout).
+       */
+      if (rendimiento.movil && !cambioAncho) return;
+      if (!rendimiento.movil && !cambioAncho && !cambioAlto) return;
+
+      construir();
+      if (!activo) fotoEstatica();
+    }, rendimiento.movil ? 280 : 150);
+  });
   document.addEventListener('visibilitychange', () => { if (document.hidden) parar(); else if (activo) arrancar(); });
   if (btnViento) btnViento.addEventListener('click', () => ponerViento(!activo));
 
