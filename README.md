@@ -170,9 +170,7 @@ barbarian-theme/
 │   │   ├── foundation.css
 │   │   ├── surfaces.css
 │   │   ├── runes.css
-│   │   ├── layout.css
-│   │   └── styles/
-│   │       └── _defaults.css
+│   │   └── layout.css
 │   ├── components/
 │   │   ├── buttons.css
 │   │   ├── cards.css
