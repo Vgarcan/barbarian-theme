@@ -4,14 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>
-  /* Aplica el tema guardado (o el del sistema) antes de pintar, para evitar parpadeos */
+  /* Prepara modo y variante antes del primer render para evitar parpadeos. */
   (function () {
-    var t; try { t = localStorage.getItem('tema-barbaro'); } catch (e) {}
-    if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-bs-theme', t);
+    var mode = null;
+    var variant = null;
+
+    try {
+      mode = localStorage.getItem('barbarian-color-mode') || localStorage.getItem('tema-barbaro');
+      variant = localStorage.getItem('barbarian-variant');
+    } catch (e) {}
+
+    if (mode !== 'dark' && mode !== 'light') {
+      mode = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    document.documentElement.setAttribute('data-bs-theme', mode);
+    document.documentElement.setAttribute('data-barbarian-variant', variant || 'desert');
   })();
 </script>
-<title>Boilerplate Bárbaro · Bootstrap 5.3</title>
+<title>Barbarian Theme · Bootstrap 5.3</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
 
 <!-- 1. Bootstrap e iconos desde CDN (siempre primero) -->
@@ -22,8 +33,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Alegreya:ital,wght@0,400;0,600;0,800;1,400&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
 
-<!-- 3. Tema bárbaro (siempre después de Bootstrap) -->
-<link href="assets/css/base.css" rel="stylesheet">
+<!-- 3. Barbarian Theme: bundle de producción, después de Bootstrap -->
+<link href="dist/barbarian-theme.min.css" rel="stylesheet">
+<!-- 4. Efecto opcional usado por esta demo -->
+<link href="dist/effects/desert.min.css" rel="stylesheet">
+<!-- 5. Estilos exclusivos de la documentación/showcase -->
+<link href="demo/demo.css" rel="stylesheet">
 </head>
 <body data-bs-spy="scroll" data-bs-target="#indice" data-bs-root-margin="0px 0px -55%">
 
@@ -54,6 +69,14 @@
         </li>
       </ul>
       <div class="d-flex flex-wrap gap-2 align-items-center">
+        <label class="visually-hidden" for="variantSelector">Variante visual</label>
+        <select class="form-select form-select-sm barbarian-variant-select" id="variantSelector" aria-label="Variante visual">
+          <option value="desert">Desert</option>
+          <option value="nordic">Nordic</option>
+          <option value="blood">Blood</option>
+          <option value="ice">Ice</option>
+          <option value="dark-kingdom">Dark Kingdom</option>
+        </select>
         <button class="btn btn-sm btn-outline-light" id="toggleTema" type="button" aria-pressed="false"><i class="bi bi-moon-stars-fill me-1" aria-hidden="true"></i><span>Modo noche</span></button>
         <button class="btn btn-sm btn-outline-light" id="toggleViento" type="button" aria-pressed="true"><i class="bi bi-wind me-1" aria-hidden="true"></i><span>Pausar viento</span></button>
         <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDemo" aria-controls="offcanvasDemo"><i class="bi bi-person-fill me-1" aria-hidden="true"></i>Mi tienda</button>
@@ -67,7 +90,7 @@
   <div class="container">
     <p class="runas-hero mb-3" aria-hidden="true">ᚦᚨᚱᛏ ᛟᚾ ᛞᚢᚾᛖᛊ</p>
     <h1 class="mb-4">Los dioses antiguos aún miran desde las dunas</h1>
-    <p class="lead mb-4">Boilerplate de Bootstrap 5.3 hecho de piel curtida, piedra de albero y runas. De día, atardecer claro. De noche, luna y constelaciones.</p>
+    <p class="lead mb-4">Un theme configurable para Bootstrap 5.3: core reutilizable, variantes visuales y efectos opcionales. Esta página es únicamente su documentación y showcase.</p>
     <div class="d-flex flex-wrap gap-2">
       <button class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#modalDemo">Invocar a los dioses</button>
       <a class="btn btn-cuero btn-lg" href="#panteon">Ver el arsenal</a>
@@ -497,7 +520,7 @@
 <footer class="footer-pelaje pelaje pt-5 pb-4">
   <div class="container">
     <div class="row g-4">
-      <div class="col-md-5"><h2><span class="runa me-2" aria-hidden="true">ᛏ</span>Tribu del Albero</h2><p class="mb-0">Boilerplate de Bootstrap 5.3 con estilo bárbaro del desierto.</p></div>
+      <div class="col-md-5"><h2><span class="runa me-2" aria-hidden="true">ᛏ</span>Barbarian Theme</h2><p class="mb-0">Theme configurable para Bootstrap 5.3 con efectos desacoplados.</p></div>
       <div class="col-6 col-md-3"><h2>Campamento</h2><ul class="list-unstyled"><li><a href="#">Inicio</a></li><li><a href="#panteon">Panteón</a></li><li><a href="#escaramuzas">Escaramuzas</a></li></ul></div>
       <div class="col-6 col-md-4"><h2>Mensajeros</h2><ul class="list-unstyled"><li><a href="#">Contacto</a></li><li><a href="#">Aviso legal</a></li></ul></div>
     </div>
@@ -535,6 +558,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script type="module" src="assets/js/base.js"></script>
+<script src="dist/barbarian-theme.min.js"></script>
+<script src="dist/effects/desert.min.js"></script>
+<script src="demo/demo.js"></script>
 </body>
 </html>
